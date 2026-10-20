@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cooling Tower Quiz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:opsz,wght@7..72,600;7..72,700&family=Noto+Sans+Tamil:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one narrow column. A 15-rung ladder (3 levels x 5 questions) sits above a single question card; the ladder is the memorable element, everything else stays quiet. */
+:root{
+  --bg:#f6f8fc; --surface:#ffffff; --ink:#14213d; --ink2:#44506b; --rule:#d5dcea; --navy:#1f3864; --on-navy:#ffffff;
+  --l1:#2f7d46; --l2:#6a4c93; --l3:#c98512;
+  --ok:#1b6b3d; --ok-bg:#e3f3e9; --no:#a8322a; --no-bg:#fbe8e5; --info-bg:#eaf0fb; --focus:#1d6fe0;
+  --body:"Atkinson Hyperlegible","Noto Sans Tamil",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --head:"Literata","Noto Sans Tamil",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1626; --surface:#172038; --ink:#e8edf8; --ink2:#a9b4cc; --rule:#2c3856; --navy:#8fb0ff; --on-navy:#0f1626;
+  --l1:#5fc283; --l2:#ad93e3; --l3:#e8b04a;
+  --ok:#7fd9a2; --ok-bg:#16341f; --no:#ff9b91; --no-bg:#3a1b19; --info-bg:#1d2a47; --focus:#7fb0ff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1626; --surface:#172038; --ink:#e8edf8; --ink2:#a9b4cc; --rule:#2c3856; --navy:#8fb0ff; --on-navy:#0f1626;
+  --l1:#5fc283; --l2:#ad93e3; --l3:#e8b04a;
+  --ok:#7fd9a2; --ok-bg:#16341f; --no:#ff9b91; --no-bg:#3a1b19; --info-bg:#1d2a47; --focus:#7fb0ff; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 var(--body);
+  padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button{font:inherit;color:inherit}
+.bar{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.bar h1{font:700 22px/1.2 var(--head);margin:0}
+.stats{display:flex;gap:16px;font-size:16px;color:var(--ink2)}
+.stats b{color:var(--ink);font-variant-numeric:tabular-nums}
+.ladder{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(15,1fr);gap:4px}
+.seg{height:16px;border-radius:2px;background:color-mix(in srgb,var(--lv) 22%,var(--bg));transition:background .25s}
+.seg[data-l="0"]{--lv:var(--l1)} .seg[data-l="1"]{--lv:var(--l2)} .seg[data-l="2"]{--lv:var(--l3)}
+.seg.first{background:var(--lv)}
+.seg.second{background:repeating-linear-gradient(135deg,var(--lv) 0 4px,color-mix(in srgb,var(--lv) 25%,var(--bg)) 4px 8px)}
+.seg.miss{background:transparent;box-shadow:inset 0 0 0 2px var(--lv)}
+.seg.now{outline:3px solid var(--ink);outline-offset:1px}
+.seg[data-l="1"],.seg[data-l="2"]{}
+.seg:nth-child(5n+1):not(:first-child){margin-left:8px}
+.bands{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:14px;color:var(--ink2);margin-top:8px}
+.bands span{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.bands i{font-style:normal;font-variant-numeric:tabular-nums}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.tag{font-size:15px;color:var(--ink2)}
+.lvl{display:inline-block;font-weight:700;padding:1px 10px;border-radius:99px;margin-right:8px;color:#fff;background:var(--lv)}
+.lvl[data-l="0"]{--lv:#2f7d46} .lvl[data-l="1"]{--lv:#6a4c93} .lvl[data-l="2"]{--lv:#8a5a00}
+h2{font:700 clamp(24px,5vw,32px)/1.2 var(--head);margin:0;text-wrap:balance}
+.q{font:600 clamp(20px,4.2vw,24px)/1.35 var(--head);margin:0;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.opt{display:flex;align-items:center;gap:14px;width:100%;min-height:56px;text-align:left;padding:12px 14px;background:var(--surface);
+  border:2px solid var(--rule);border-radius:8px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--navy)}
+.opt:disabled{cursor:default}
+.ltr{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:2px solid currentColor;font-weight:700;font-size:16px}
+.otext{flex:1;min-width:0}
+.mark{flex:none;font-size:14px;font-weight:700}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)} .opt.ok .mark{color:var(--ok)}
+.opt.no{border-color:var(--no);background:var(--no-bg)} .opt.no .mark{color:var(--no)}
+.opt.dim{opacity:.6}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{min-height:44px;padding:8px 18px;border-radius:8px;border:2px solid var(--navy);background:transparent;color:var(--navy);font-weight:700;cursor:pointer}
+.btn:hover:not(:disabled){background:color-mix(in srgb,var(--navy) 12%,transparent)}
+.btn.primary{background:var(--navy);color:var(--on-navy)}
+.btn.primary:hover{background:var(--navy);filter:brightness(1.1)}
+.btn:disabled{opacity:.5;cursor:default}
+.fb{border-radius:8px;padding:14px 16px;background:var(--info-bg)}
+.fb.ok{background:var(--ok-bg)} .fb.no{background:var(--no-bg)}
+.fb p{margin:0 0 6px} .fb p:last-child{margin:0}
+.fb strong{font-weight:700}
+.ta{border-top:1px dashed var(--rule);padding-top:8px;margin-top:8px}
+.hint{background:var(--info-bg);padding:10px 14px;border-radius:8px}
+ul.how{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+details{border:1px solid var(--rule);border-radius:8px;padding:10px 14px;background:var(--surface)}
+summary{cursor:pointer;font-weight:700;min-height:28px}
+.stars{font-size:28px;letter-spacing:4px;color:var(--l3)}
+.stars span.off{opacity:.25}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.badges li{border:2px solid var(--navy);color:var(--navy);border-radius:99px;padding:4px 14px;font-weight:700;font-size:16px}
+.badges li.lock{border-style:dashed;border-color:var(--rule);color:var(--ink2);font-weight:400}
+.big{font:700 44px/1 var(--head);font-variant-numeric:tabular-nums}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.sum div{border:1px solid var(--rule);border-radius:8px;padding:10px 12px;background:var(--surface)}
+.sum small{display:block;color:var(--ink2);font-size:14px}
+.rev{display:flex;flex-direction:column;gap:12px}
+.rev article{border-left:6px solid var(--lv);padding-left:12px}
+.rev p{margin:2px 0}
+.foot{font-size:15px;color:var(--ink2)}
+a{color:var(--navy)}
+@media (max-width:480px){body{font-size:17px}.card{padding:16px}.seg:nth-child(5n+1):not(:first-child){margin-left:4px}.stats{font-size:15px}}
+@media (prefers-reduced-motion:reduce){.seg{transition:none}}
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <header class="bar">
+    <h1>Cooling Tower Quiz</h1>
+    <div class="stats" aria-live="off"><span>Score <b id="score">0</b></span><span>Streak <b id="streak">0</b></span></div>
+  </header>
+  <div id="ladderbox"></div>
+  <div id="screen"></div>
+  <p class="foot">GE3791 Human Values and Ethics, Unit V. The case, people and figures are invented for teaching. Tamil explanations were drafted by AI.</p>
+</main>
+<script>
+(function(){
+"use strict";
+var LEVELS=[
+ {name:"Base camp",pts:10,blurb:"Know the case and the key ideas."},
+ {name:"Field work",pts:20,blurb:"Use the ideas on Meena's case."},
+ {name:"Summit",pts:30,blurb:"Weigh, judge and decide."}
+];
+var Q=[
+ {l:0,k:"K1",co:"CO5",q:"What did Meena find while preparing the fatigue report?",
+  a:"The supplier changed the steel, so the weld would last about 3 years, not 20",
+  w:["The tower had already been delivered to the client late","The fan was too small to drive the gearbox","Mr. Sundaram had taken money from the supplier"],
+  hint:"Look for the purchase note in the case.",
+  why:"Meena found a purchase note showing a cheaper steel. Running the calculation again gave about 3 years of weld life instead of 20.",
+  ta:"மீனா கொள்முதல் குறிப்பைப் பார்த்தாள். மலிவான எஃகு பயன்படுத்தப்பட்டதால் வெல்டின் ஆயுள் 20 ஆண்டுகள் அல்ல, சுமார் 3 ஆண்டுகள் மட்டுமே."},
+ {l:0,k:"K2",co:"CO1",q:"The AI sentence “within acceptable limits, subject to periodic inspection” mainly fails which value?",
+  a:"Transparency",w:["Speed","Popularity","Cost saving"],
+  hint:"The sentence hides the 3-year result.",
+  why:"Transparency means telling the whole truth that others need in order to decide. The sentence sounds professional but leaves out the number that matters.",
+  ta:"வெளிப்படைத்தன்மை என்பது மற்றவர்கள் முடிவெடுக்கத் தேவையான முழு உண்மையையும் சொல்வது. அந்த வாக்கியம் முக்கியமான 3 ஆண்டு என்ற எண்ணை மறைக்கிறது."},
+ {l:0,k:"K1",co:"CO4",q:"What does it mean to “escalate” a concern?",
+  a:"Raising the concern with someone who has more authority",
+  w:["Keeping it secret until a later date","Fixing it quietly without telling anyone","Posting it online before anything else"],
+  hint:"Think of going up a ladder of responsibility.",
+  why:"Escalating means taking a serious concern to a person or group that can decide and act, usually in steps.",
+  ta:"'Escalate' என்றால் ஒரு முக்கியமான கவலையை முடிவெடுக்கும் அதிகாரம் உள்ள மேலதிகாரியிடம் கொண்டு செல்வது."},
+ {l:0,k:"K2",co:"CO5",q:"Which of these is part of scientific temper?",
+  a:"Questioning and testing claims against evidence",
+  w:["Accepting whatever a senior person says","Believing what most people believe","Avoiding calculations that give bad news"],
+  hint:"Scientific temper asks, “What is the evidence?”",
+  why:"Scientific temper means asking for evidence and checking claims, whoever makes them.",
+  ta:"அறிவியல் மனப்பான்மை என்பது யார் சொன்னாலும் ஆதாரம் கேட்டு, சரிபார்த்து ஏற்பது."},
+ {l:0,k:"K2",co:"CO4",q:"Who could be hurt if the bracket fails?",
+  a:"About 60 of the client's workers beside the tower",
+  w:["Only Meena, because she wrote the report","Nobody, because the design was approved","Only the steel supplier, because of the warranty"],
+  hint:"Think about who works next to the tower.",
+  why:"The fan assembly could fall onto the work floor where about 60 of the client's workers work each shift. An approval does not remove the risk.",
+  ta:"மின்விசிறி அமைப்பு விழுந்தால், கோபுரத்தின் அருகே ஒவ்வொரு பணிநேரத்திலும் வேலை செய்யும் சுமார் 60 தொழிலாளர்கள் பாதிக்கப்படலாம். ஒப்புதல் இருப்பதால் ஆபத்து நீங்காது."},
+
+ {l:1,k:"K3",co:"CO3",q:"Mr. Sundaram says, “Change the warranty to three years.” Why does this not solve the problem?",
+  a:"A warranty only moves the cost; the weld still fails at about 3 years",
+  w:["A warranty makes the steel stronger over time","Three years is too short for any warranty","Clients never read the warranty at all"],
+  hint:"Does a warranty change how the metal behaves?",
+  why:"A warranty decides who pays after a failure. It does not stop the failure, and people can still be hurt.",
+  ta:"உத்தரவாதம் என்பது தோல்விக்குப் பிறகு யார் செலவு செய்வது என்பதை மட்டுமே முடிவு செய்கிறது. தோல்வியைத் தடுக்காது; மக்கள் காயமடையலாம்."},
+ {l:1,k:"K3",co:"CO5",q:"Which first step best shows scientific temper?",
+  a:"Re-check the calculation and the note, and keep a written record",
+  w:["Post the problem on social media at once","Sign the report and hope for the best","Ask friends to vote on what to do"],
+  hint:"Test your own finding before acting on it.",
+  why:"A careful engineer confirms the evidence first and records it, so the concern can be trusted and acted on.",
+  ta:"முதலில் தன் கணக்கீட்டையும் குறிப்பையும் மீண்டும் சரிபார்த்து எழுத்தில் பதிவு செய்வதே அறிவியல் மனப்பான்மை. அப்போதுதான் அந்த கவலை நம்பகமாகும்."},
+ {l:1,k:"K3",co:"CO4",q:"Which is the best way for Meena to escalate?",
+  a:"Tell Mr. Sundaram in writing with the calculation, then go to a senior reviewer if ignored",
+  w:["Call a newspaper first, before telling anyone at the company","Change the drawing quietly by herself and say nothing","Say nothing to anyone and resign next month"],
+  hint:"Start with the person closest to the problem, and put it in writing.",
+  why:"A written message with evidence gives the company a fair chance to fix the problem. If it is ignored, going higher is the next step.",
+  ta:"ஆதாரத்துடன் எழுத்தில் தெரிவிப்பது நிறுவனத்துக்குச் சரிசெய்ய நியாயமான வாய்ப்பைத் தருகிறது. புறக்கணிக்கப்பட்டால் அடுத்த மேலதிகாரியிடம் செல்லலாம்."},
+ {l:1,k:"K3",co:"CO3",q:"In the four-step card (facts, values, options, decision), which statement is a fact?",
+  a:"The purchase note shows the steel grade changed three months ago",
+  w:["Mr. Sundaram is being unfair to Meena","The client will be very angry about a delay","Nobody will ever notice the change in steel"],
+  hint:"A fact can be checked. An opinion or a guess cannot.",
+  why:"The purchase note can be checked. The other statements are opinions or guesses about people.",
+  ta:"கொள்முதல் குறிப்பைச் சரிபார்க்க முடியும், அதனால் அது உண்மை. மற்றவை கருத்துகள் அல்லது ஊகங்கள்."},
+ {l:1,k:"K3",co:"CO4",q:"A classmate says, “The AI wrote it, so it is the AI's fault.” What is the best reply?",
+  a:"The person who signs and sends the report is accountable",
+  w:["AI is never wrong, so there is no fault","Only the manager is ever responsible","Nobody is responsible for a single sentence"],
+  hint:"Who puts their name on the report?",
+  why:"A tool can draft words, but the person who signs and sends them answers for them.",
+  ta:"செயற்கை நுண்ணறிவு வார்த்தைகளை எழுதலாம்; ஆனால் அறிக்கையில் கையெழுத்திட்டு அனுப்புபவரே அதற்குப் பொறுப்பு."},
+
+ {l:2,k:"K4",co:"CO4",q:"Meena's father says, “Do not risk your job.” Which reply respects his worry and her duty?",
+  a:"Report it in writing through the company's channel and keep the evidence",
+  w:["Jobs do not matter, so tell everyone at once","Do whatever the manager says and stay quiet","Tell the client but hide it from the company"],
+  hint:"Look for the reply that is both honest and careful.",
+  why:"Reporting in writing through the proper channel is honest, and keeping the evidence protects Meena. It answers her father's fear without hiding the risk.",
+  ta:"நிறுவனத்தின் வழியாக எழுத்தில் தெரிவித்து ஆதாரத்தைப் பாதுகாப்பது நேர்மையானது; மீனாவையும் காக்கும். இது தந்தையின் அச்சத்துக்கும் பதிலளிக்கிறது."},
+ {l:2,k:"K4",co:"CO3",q:"How should we compare the ₹18 lakh penalty with the harm of a falling fan?",
+  a:"A money loss can be recovered; a death cannot",
+  w:["Money is always more important than safety","Both harms are exactly equal in weight","Harm to workers does not count if the contract says to deliver"],
+  hint:"Ask which harm can be repaired later.",
+  why:"The penalty hurts, but it can be negotiated or recovered. A death or serious injury cannot be undone, so it weighs more.",
+  ta:"அபராதம் வலி தருவதுதான்; ஆனால் பேசி குறைக்கலாம் அல்லது ஈடுசெய்யலாம். உயிரிழப்பு அல்லது கடும் காயத்தை மாற்ற முடியாது; அதனால் அது அதிக எடை பெறுகிறது."},
+ {l:2,k:"K4",co:"CO5",q:"The Oppenheimer reading leads to which conclusion about scientists?",
+  a:"Scientists remain responsible for how their work is used",
+  w:["Scientists should choose the cheapest fuel","Scientists should never publish their results","Scientists are free of blame once the work is finished"],
+  hint:"Think of the unit topic: the role and responsibility of scientists.",
+  why:"The reading shows a scientist facing the effects of his work after others put it to use. It links to Meena's case: knowing the risk brings responsibility.",
+  ta:"ஒரு விஞ்ஞானி தன் பணி எவ்வாறு பயன்படுத்தப்படுகிறது என்பதற்குப் பொறுப்பேற்க வேண்டும் என்ற கருத்தை அந்த வாசிப்பு எழுப்புகிறது. ஆபத்தை அறிந்தவருக்குப் பொறுப்பும் உண்டு."},
+ {l:2,k:"K5",co:"CO4",q:"Which change would best stop this problem from happening again?",
+  a:"A design-change log with re-check and sign-off before delivery",
+  w:["More AI tools to write reports faster","Punishing the junior engineer who found the flaw","Dropping the fatigue check to save time"],
+  hint:"Fix the system, not only the person.",
+  why:"The steel change slipped through because nobody recorded it. A change log with re-check and sign-off catches it before delivery.",
+  ta:"எஃகு மாற்றம் பதிவு செய்யப்படாததால் தவறு தப்பியது. மாற்றப் பதிவேடு, மறுசரிபார்ப்பு, ஒப்புதல் இருந்தால் டெலிவரிக்கு முன்பே பிடிபடும்."},
+ {l:2,k:"K4",co:"CO3",q:"A colleague says, “If the contract does not forbid it, it is ethical.” What is the weakness?",
+  a:"Contracts cannot list every risk; a permitted act can still harm people",
+  w:["Contracts are always unfair to engineers","Ethics applies only to doctors and lawyers","Only courts can decide what is right and wrong"],
+  hint:"Is everything that is allowed also safe and fair?",
+  why:"Law and contracts set minimum rules. An act can be allowed and still be unsafe or unfair, so we also ask about harm and fairness.",
+  ta:"சட்டமும் ஒப்பந்தமும் குறைந்தபட்ச விதிகளை மட்டுமே தருகின்றன. அனுமதிக்கப்பட்ட செயலும் ஆபத்தானதாகவோ அநியாயமாகவோ இருக்கலாம்; அதனால் தீங்கு, நியாயம் பற்றியும் கேட்க வேண்டும்."}
+];
+var LET=["A","B","C","D"];
+var S, C;
+var screen=document.getElementById("screen"), ladderbox=document.getElementById("ladderbox");
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function fresh(){
+  S={i:0,score:0,run:0,best:0,bonus:0,res:[],phase:"q",opts:Q.map(function(q){
+    return shuffle([{t:q.a,ok:true}].concat(q.w.map(function(x){return{t:x,ok:false};})));})};
+  newCard();
+}
+function newCard(){C={tries:0,wrong:{},done:false,ok:false,hint:false,ta:false,pts:0,bonus:0};}
+function pts(q,tries,hint){var p=LEVELS[q.l].pts*(tries===1?1:0.5);if(hint)p-=5;return Math.max(0,Math.round(p));}
+function setStats(){document.getElementById("score").textContent=S?S.score:0;document.getElementById("streak").textContent=S?S.run:0;}
+
+function ladder(){
+  var h='<ol class="ladder" aria-label="Progress, 15 questions in 3 levels">';
+  for(var k=0;k<15;k++){
+    var r=S&&S.res[k],cls="seg",lab="Question "+(k+1)+", "+LEVELS[Math.floor(k/5)].name+": ";
+    if(r){cls+=r.first?" first":(r.ok?" second":" miss");lab+=r.first?"correct on the first try":(r.ok?"correct on the second try":"missed");}
+    else if(S&&S.phase==="q"&&k===S.i){cls+=" now";lab+="current";}else lab+="not answered yet";
+    h+='<li class="'+cls+'" data-l="'+Math.floor(k/5)+'" role="img" aria-label="'+lab+'"></li>';
+  }
+  h+='</ol><div class="bands">';
+  for(var b=0;b<3;b++){
+    var n=0;if(S)for(var m=b*5;m<b*5+5;m++)if(S.res[m]&&S.res[m].ok)n++;
+    h+='<span><span>'+LEVELS[b].name+'</span><i>'+n+'/5</i></span>';
+  }
+  return h+'</div>';
+}
+
+function startScreen(){
+  return '<section class="card">'+
+   '<h2>Meena’s report is due in the morning. Help her decide.</h2>'+
+   '<p>Answer 15 questions in three levels. Each one is about the case of the cooling tower bracket.</p>'+
+   '<ul class="how">'+
+   '<li><b>Three levels.</b> Base camp (10 points each), Field work (20) and Summit (30).</li>'+
+   '<li><b>Two tries.</b> A wrong first answer lets you try once more for half the points.</li>'+
+   '<li><b>Hint</b> costs 5 points. The <b>Tamil explanation</b> is always free.</li>'+
+   '<li><b>Streak bonus.</b> Every third first-try answer in a row earns 5 points.</li>'+
+   '<li>No timer. Take your time and talk it over with your team.</li></ul>'+
+   '<details><summary>The case in brief</summary><p>Meena Rajan, a junior engineer in Tamil Nadu, finds that a supplier changed the steel in the fan bracket of a cooling tower. Her new calculation says the weld would last about 3 years, not 20. Her manager, Mr. Sundaram, asks her to write that the bracket is acceptable with regular inspection, because a delay would cost ₹18 lakh and leave 140 workers idle. An AI tool gives her a smooth sentence that hides the 3-year result. The tower will stand beside about 60 of the client’s workers. The report is due tomorrow morning.</p></details>'+
+   '<div class="row"><button class="btn primary" id="start" type="button">Start Base camp</button></div></section>';
+}
+
+function questionScreen(){
+  var q=Q[S.i],lv=LEVELS[q.l],o=S.opts[S.i];
+  var h='<section class="card" aria-labelledby="qtext">'+
+   '<div class="tag"><span class="lvl" data-l="'+q.l+'">'+lv.name+'</span>Question '+(S.i+1)+' of 15 · '+lv.pts+' points · '+q.k+' · '+q.co+'</div>'+
+   '<p class="q" id="qtext">'+esc(q.q)+'</p><ul class="opts">';
+  for(var j=0;j<o.length;j++){
+    var cls="opt",mark="",dis=C.done||C.wrong[j];
+    if(C.wrong[j]){cls+=" no";mark="Not this one";}
+    if(C.done&&o[j].ok){cls+=" ok";mark="Correct";}
+    if(C.done&&!o[j].ok&&!C.wrong[j])cls+=" dim";
+    h+='<li><button type="button" class="'+cls+'" data-i="'+j+'"'+(dis?' disabled':'')+'><span class="ltr" aria-hidden="true">'+LET[j]+'</span><span class="otext">'+esc(o[j].t)+'</span>'+(mark?'<span class="mark">'+mark+'</span>':'')+'</button></li>';
+  }
+  h+='</ul>';
+  if(C.hint&&!C.done)h+='<div class="hint"><b>Hint:</b> '+esc(q.hint)+'</div>';
+  h+='<div id="fb" role="status" aria-live="polite">';
+  if(!C.done&&C.tries===1)h+='<div class="fb no"><p><strong>Not quite.</strong> Try once more for half the points.</p></div>';
+  if(C.done){
+    var head;
+    if(C.ok&&C.tries===1)head='Correct. +'+C.pts+' points.'+(C.bonus?' Streak bonus +'+C.bonus+'.':'');
+    else if(C.ok)head='Correct on the second try. +'+C.pts+' points.';
+    else head='Not this time. The correct answer is marked above. +0 points.';
+    h+='<div class="fb '+(C.ok?'ok':'no')+'"><p><strong>'+head+'</strong></p><p>'+esc(q.why)+'</p>'+
+       '<p><button class="btn" id="ta" type="button" aria-expanded="'+(C.ta?'true':'false')+'">தமிழில் / Tamil</button></p>'+
+       (C.ta?'<p class="ta" lang="ta">'+esc(q.ta)+'</p>':'')+'</div>';
+  }
+  h+='</div><div class="row">';
+  if(!C.done)h+='<button class="btn" id="hintbtn" type="button"'+(C.hint?' disabled':'')+'>Hint (−5 points)</button>';
+  else h+='<button class="btn primary" id="next" type="button">'+(S.i===14?'See my result':(S.i%5===4?'Finish '+lv.name:'Next question'))+'</button>';
+  return h+'</div></section>';
+}
+
+function stars(n){var s=n>=5?3:n>=3?2:n>=1?1:0,h='<div class="stars" aria-label="'+s+' of 3 stars">';for(var i=0;i<3;i++)h+='<span class="'+(i<s?'':'off')+'">★</span>';return h+'</div>';}
+function lvlCorrect(b){var n=0;for(var m=b*5;m<b*5+5;m++)if(S.res[m]&&S.res[m].ok)n++;return n;}
+
+function levelEndScreen(){
+  var b=Math.floor((S.i)/5),n=lvlCorrect(b),nx=LEVELS[b+1];
+  return '<section class="card"><h2>'+LEVELS[b].name+' complete</h2>'+stars(n)+
+   '<p>You answered <b>'+n+' of 5</b> correctly. Your score so far is <b>'+S.score+'</b>.</p>'+
+   '<p>Next: <b>'+nx.name+'</b>. '+nx.blurb+'</p><div class="row"><button class="btn primary" id="cont" type="button">Start '+nx.name+'</button></div></section>';
+}
+
+function endScreen(){
+  var c=[lvlCorrect(0),lvlCorrect(1),lvlCorrect(2)],second=false,i;
+  for(i=0;i<15;i++)if(S.res[i]&&S.res[i].ok&&!S.res[i].first)second=true;
+  var badges=[["Fact Finder",c[0]>=4,"4 of 5 at Base camp"],["Clear Thinker",c[1]>=4,"4 of 5 at Field work"],["Summit Reached",c[2]>=3,"3 of 5 at Summit"],["Streak of 5",S.best>=5,"5 first-try answers in a row"],["Second Wind",second,"a right answer on the second try"]];
+  var rank=S.score>=250?"Summit engineer":S.score>=150?"Field engineer":"Still climbing";
+  var h='<section class="card"><h2>Your result: '+rank+'</h2><div class="sum">'+
+   '<div><small>Score</small><span class="big">'+S.score+'</span></div>'+
+   '<div><small>Streak bonus</small><b>+'+S.bonus+'</b></div>'+
+   '<div><small>Correct in the end</small><b>'+(c[0]+c[1]+c[2])+' of 15</b></div></div>'+
+   '<div class="sum">';
+  for(i=0;i<3;i++)h+='<div><small>'+LEVELS[i].name+'</small>'+stars(c[i])+'</div>';
+  h+='</div><div><b>Badges</b><ul class="badges" style="margin-top:8px">';
+  badges.forEach(function(b){h+='<li class="'+(b[1]?'':'lock')+'">'+(b[1]?b[0]:b[0]+' · '+b[2])+'</li>';});
+  h+='</ul></div>';
+  var miss=[];for(i=0;i<15;i++)if(!S.res[i].first)miss.push(i);
+  if(miss.length){
+    h+='<details open><summary>Review '+miss.length+' question'+(miss.length>1?'s':'')+' to revisit</summary><div class="rev" style="margin-top:10px">';
+    miss.forEach(function(k){var q=Q[k],lv=["var(--l1)","var(--l2)","var(--l3)"][q.l];
+      h+='<article style="--lv:'+lv+'"><p><b>'+(k+1)+'. '+esc(q.q)+'</b></p><p>Answer: '+esc(q.a)+'</p><p>'+esc(q.why)+'</p><p lang="ta">'+esc(q.ta)+'</p><p class="tag">'+q.k+' · '+q.co+'</p></article>';});
+    h+='</div></details>';
+  } else h+='<p>You answered every question correctly on the first try.</p>';
+  return h+'<div class="row"><button class="btn primary" id="again" type="button">Play again</button></div></section>';
+}
+
+function render(focusSel){
+  ladderbox.innerHTML=ladder();
+  screen.innerHTML=S.phase==="start"?startScreen():S.phase==="q"?questionScreen():S.phase==="levelEnd"?levelEndScreen():endScreen();
+  setStats();
+  if(focusSel){var el=screen.querySelector(focusSel);if(el)el.focus();}
+}
+
+function pick(j){
+  if(C.done||C.wrong[j])return;
+  var q=Q[S.i],o=S.opts[S.i][j];C.tries++;
+  if(o.ok){
+    C.done=true;C.ok=true;C.pts=pts(q,C.tries,C.hint);S.score+=C.pts;
+    if(C.tries===1){S.run++;if(S.run>S.best)S.best=S.run;if(S.run%3===0){C.bonus=5;S.score+=5;S.bonus+=5;}}else S.run=0;
+    S.res[S.i]={ok:true,first:C.tries===1};
+    render("#next");
+  }else{
+    C.wrong[j]=true;
+    if(C.tries>=2){C.done=true;C.ok=false;C.pts=0;S.run=0;S.res[S.i]={ok:false,first:false};render("#next");}
+    else{S.run=0;render(".opt:not(:disabled)");}
+  }
+}
+function next(){
+  if(S.i===14){S.phase="end";render("#again");return;}
+  if(S.i%5===4){S.phase="levelEnd";render("#cont");return;}
+  S.i++;newCard();render(".opt");
+}
+screen.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;
+  if(t.classList.contains("opt"))pick(+t.getAttribute("data-i"));
+  else if(t.id==="hintbtn"){C.hint=true;render("#hintbtn");}
+  else if(t.id==="ta"){C.ta=!C.ta;render("#ta");}
+  else if(t.id==="next")next();
+  else if(t.id==="cont"){S.i++;S.phase="q";newCard();render(".opt");}
+  else if(t.id==="start"){fresh();render(".opt");}
+  else if(t.id==="again"){S=null;S={phase:"start",res:[],score:0,run:0};render("#start");}
+});
+document.addEventListener("keydown",function(e){
+  if(!S||S.phase!=="q"||C.done||e.ctrlKey||e.metaKey||e.altKey)return;
+  var k=e.key.toLowerCase(),j="1234".indexOf(k);if(j<0)j="abcd".indexOf(k);
+  if(j>=0&&j<4&&document.activeElement.tagName!=="INPUT"){e.preventDefault();pick(j);}
+});
+S={phase:"start",res:[],score:0,run:0};
+render();
+})();
+</script>
+</body>
+</html>
