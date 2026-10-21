@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GE3791 Class Agent</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#1b2437;--mut:#5b667d;--acc:#2e5496;--navy:#1f3864;--line:#d5dcea;--me:#e3ecfb}
+@media(prefers-color-scheme:dark){:root{--bg:#10151f;--card:#1a2130;--ink:#e8edf7;--mut:#9aa6bd;--acc:#7da4ec;--navy:#9db8ee;--line:#2d374c;--me:#23324f}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Noto Sans Tamil",sans-serif}
+main{max-width:640px;margin:0 auto;padding:16px;display:flex;flex-direction:column;min-height:100vh}
+h1{font-size:20px;margin:4px 0;color:var(--navy)}p.sub{margin:0 0 12px;color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:120px}
+input,button{font:inherit;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+button{cursor:pointer;background:var(--acc);color:#fff;border-color:var(--acc)}button.alt{background:var(--card);color:var(--acc)}
+#chat{flex:1;margin:12px 0;display:flex;flex-direction:column;gap:8px;overflow:auto}
+.m{padding:10px 12px;border-radius:12px;max-width:88%;white-space:pre-wrap;word-break:break-word}
+.m.me{align-self:flex-end;background:var(--me)}.m.bot{align-self:flex-start;background:var(--card);border:1px solid var(--line)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.chips button{padding:6px 10px;font-size:14px;flex:none}
+small{color:var(--mut);display:block;margin-top:8px;font-size:12.5px}a{color:var(--acc)}
+</style></head><body><main>
+<h1>GE3791 Class Agent</h1>
+<p class="sub">Human Values and Ethics · KCET Cuddalore · ask in Tamil or English / தமிழிலோ ஆங்கிலத்திலோ கேளுங்கள்</p>
+<details class="card"><summary>My attendance (Reg. No and PIN) / என் வருகை</summary>
+<div class="row" style="margin-top:8px"><input id="reg" placeholder="Reg. No" autocomplete="off" inputmode="numeric"><input id="pin" placeholder="PIN" type="password" autocomplete="off" inputmode="numeric"></div></details>
+<div id="chat" aria-live="polite"><div class="m bot">Hello! Ask about assignments, notes, attendance or the syllabus. / வணக்கம்! என்னிடம் கேளுங்கள்.</div></div>
+<div class="chips"><button class="alt" data-q="assignments due">Assignments</button><button class="alt" data-q="unit 1 notes">Notes</button><button class="alt" data-q="my attendance">My attendance</button><button class="alt" data-q="syllabus units">Syllabus</button><button class="alt" data-q="exit ticket form">Exit ticket</button></div>
+<form id="f" class="row"><input id="q" placeholder="Type your question / கேள்வியை எழுதுங்கள்" maxlength="400" autocomplete="off" style="flex:4"><button style="flex:1">Send</button></form>
+<small>Do not type phone numbers or private details. Chats are kept for 4 weeks, then deleted. Answers come from your teacher's approved FAQ; anything else goes to your teacher. AI explanations, when shown, are marked and may be wrong.</small>
+</main>
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbx_z1HNnk7TNlydstY3ZV54H9-Et5BqhD4vHFDTIJULgHJoA9qQdqnFmaUv-VDqZLOvdw/exec';
+const chat = document.getElementById('chat'), q = document.getElementById('q');
+function add(t, c){ const d = document.createElement('div'); d.className = 'm ' + c; d.textContent = t; chat.appendChild(d); chat.scrollTop = chat.scrollHeight; return d; }
+async function ask(text){
+  text = text.trim(); if(!text) return; add(text, 'me'); q.value = '';
+  const wait = add('…', 'bot');
+  if(API.startsWith('PASTE')){ wait.textContent = 'The agent is not connected yet (teacher: paste the web app URL in agent.html).'; return; }
+  try{
+    const r = await fetch(API, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({message:text, reg:document.getElementById('reg').value, pin:document.getElementById('pin').value})});
+    wait.textContent = (await r.json()).reply;
+  }catch(e){ wait.textContent = 'No connection. Please try again or ask in the class group.'; }
+}
+document.getElementById('f').addEventListener('submit', e => { e.preventDefault(); ask(q.value); });
+document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => ask(b.dataset.q));
+</script></body></html>
