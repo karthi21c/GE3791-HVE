@@ -10,6 +10,7 @@ Live at https://karthi21c.github.io/GE3791-HVE/
 | `site-config.js` | **Cohort settings**: exam date, session, "last updated", paper pattern |
 | `past-papers.js` | **Previous papers** and the "topics that came back" list |
 | `key-answers.js` | **Model-answer outlines** for the most repeated questions (the "Top repeated" tab) |
+| `materials.js` | **Drive links** to class slides and handouts for each unit tab (view-only files in Google Drive) |
 | `quiz.html`, `simulation.html`, `agent.html` | Practice tools |
 | `style.css`, `assets/` | Look and logo |
 

@@ -43,9 +43,10 @@ details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;fo
 <div class="card"><h2>Practise more</h2><ul><li><a href="quiz.html">Case quiz</a> (Unit V, Cooling Tower Report)</li><li><a href="simulation.html">Simulation</a>: Meena's Next 24 Hours</li><li><a href="agent.html">Class agent</a>: ask about assignments, notes and the syllabus</li></ul></div>
 <p class="foot">Prepared as a revision aid for students of this class. Practice questions are based on the syllabus; previous-paper questions are listed for practice and are not a prediction of the next paper. Tamil terms are given to help understanding. Last updated: <span id="upd">10 Nov 2026</span>.</p>
 </main>
-<script src="site-config.js?v=20261110b"></script>
-<script src="past-papers.js?v=20261110b"></script>
-<script src="key-answers.js?v=20261110b"></script>
+<script src="site-config.js?v=20261110c"></script>
+<script src="past-papers.js?v=20261110c"></script>
+<script src="key-answers.js?v=20261110c"></script>
+<script src="materials.js?v=20261110c"></script>
 <script>
 const U=[
 {n:"Unit I",t:"Democratic Values",ta:"ஜனநாயக மதிப்புகள்",
@@ -81,6 +82,10 @@ function asked(n){
   h+=`<details><summary>${esc(p.name)} (${L.length})</summary><ul>`+L.map(x=>`<li><b>Q${esc(x.q)}</b> (Part ${x.part}, ${x.m} marks) ${esc(x.t)}</li>`).join('')+'</ul></details>';});
  return h?'<h3>Asked in previous Anna University papers</h3>'+h:'';
 }
+function mats(n){
+ const L=(window.MATERIALS||{})[n];if(!L||!L.length)return '';
+ return '<h3>Class slides and handouts (view only)</h3><p class="sub">Opens in Google Drive. Large slide files need Wi-Fi or good data.</p><ul>'+L.map(m=>`<li><a href="https://drive.google.com/file/d/${m.id}/view" target="_blank" rel="noopener">${esc(m.t)}</a> <span class="sub">(${esc(m.kind)}, ${esc(m.mb)})</span></li>`).join('')+'</ul>';
+}
 function topHtml(){
  return '<div class="card"><h2>Top repeated questions</h2><p class="sub">These topics came up in all or most of the last four papers. Learn them first. Tap a topic for a model-answer outline.</p>'+
  (window.KEYS||[]).map(k=>`<details><summary>${esc(k.title)}</summary><p class="sub">${esc(k.papers)}. Asked as: ${esc(k.ask)}</p><ul>${k.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`).join('')+'</div>';
@@ -94,7 +99,7 @@ function show(k){
  <h3>Key terms: English and Tamil</h3><table>${u.terms.map(t=>`<tr><td>${esc(t[0])}</td><td>${esc(t[1])}</td></tr>`).join('')}</table>
  <h3>2-mark practice questions</h3>${u.two.map(q=>`<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}
  <h3>Long-answer practice questions</h3>${u.long.map(q=>`<details><summary>${esc(q[0])}</summary><ul>${q[1].map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`).join('')}</div>`;
- V.firstElementChild.insertAdjacentHTML('beforeend',asked(i+1));
+ V.firstElementChild.insertAdjacentHTML('beforeend',mats(i+1)+asked(i+1));
  try{sessionStorage.setItem('u',k)}catch(e){}
 }
 (function(){const b=document.createElement('button');b.textContent='Top repeated';b.setAttribute('role','tab');b.onclick=()=>show(0);T.appendChild(b)})();
