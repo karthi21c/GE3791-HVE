@@ -25,6 +25,30 @@ window.PAPERS = [
  {q:"16(a)",part:"C",m:15,u:[4,5],t:"Analyze a case where scientific inventions, such as medical technology, have addressed gender bias and discrimination in healthcare. Discuss the ethical responsibilities of scientists in ensuring these inventions are applied fairly, and propose measures to enhance transparency and inclusivity in their development and distribution."},
  {q:"16(b)",part:"C",m:15,u:[4],t:"Examine a situation where constitutional protections against gender violence were challenged by societal biases. Discuss the role of ethical reasoning and scientific evidence in informing policies, and propose solutions that ensure both fair application of scientific advancements and the protection of individual rights in addressing gender-related issues."}
 ]},
+{name:"Apr/May 2025", code:"91264", items:[
+ {q:"1",part:"A",m:2,u:[1],t:"Define democratic values."},
+ {q:"2",part:"A",m:2,u:[1],t:"What is pluralism?"},
+ {q:"3",part:"A",m:2,u:[2],t:"What are secular values?"},
+ {q:"4",part:"A",m:2,u:[2],t:"Write the significance of acceptance of all faith."},
+ {q:"5",part:"A",m:2,u:[3],t:"Distinguish between skepticism and empiricism."},
+ {q:"6",part:"A",m:2,u:[3],t:"Write a note on scientific values."},
+ {q:"7",part:"A",m:2,u:[4],t:"What are inclusive practices?"},
+ {q:"8",part:"A",m:2,u:[4],t:"Give any two examples for social discrimination."},
+ {q:"9",part:"A",m:2,u:[5],t:"State the need for scientific ethics."},
+ {q:"10",part:"A",m:2,u:[5],t:"Give any two examples for unfair applications of scientific invention."},
+ {q:"11(a)",part:"B",m:13,u:[1],t:"Discuss the role of Liberty, Fraternity and freedom of expression in democracy."},
+ {q:"11(b)",part:"B",m:13,u:[1],t:"Outline the significance of French Revolution and American Independence in world democracy."},
+ {q:"12(a)",part:"B",m:13,u:[2],t:"How are secularism interpreted in Indian context? Explain in detail."},
+ {q:"12(b)",part:"B",m:13,u:[2],t:"What are non-discriminatory practices? Discuss the ways to encourage non-discriminatory practices in India."},
+ {q:"13(a)",part:"B",m:13,u:[3],t:"Compare inductive and deductive thinking with suitable examples."},
+ {q:"13(b)",part:"B",m:13,u:[3],t:"Explain the significance and impact of rationalism and scientific temper in detail."},
+ {q:"14(a)",part:"B",m:13,u:[4],t:"Discuss the applications of ethical reasoning to social problems with illustrations."},
+ {q:"14(b)",part:"B",m:13,u:[4],t:"Discuss in detail the role of constitution in protecting social ethics in India."},
+ {q:"15(a)",part:"B",m:13,u:[5],t:"Describe the need and significance of transparency and fairness in scientific inventions."},
+ {q:"15(b)",part:"B",m:13,u:[5],t:"Discuss the roles and responsibilities of scientist in the modern society in detail."},
+ {q:"16(a)",part:"C",m:15,u:[1],t:"Critically evaluate the role of citizen participation in governance with illustrations."},
+ {q:"16(b)",part:"C",m:15,u:[4],t:"Discuss the key issues in gender bias and suggest ways to overcome gender violence in India."}
+]},
 {name:"Nov/Dec 2025", code:"81523", items:[
  {q:"1",part:"A",m:2,u:[1],t:"Define pluralism."},
  {q:"2",part:"A",m:2,u:[1],t:"State the contribution of the American Independence movement to the development of democracy."},
@@ -76,13 +100,14 @@ window.PAPERS = [
 ];
 /* Topics that came back in more than one paper; update the list when a new paper is added. */
 window.REPEATS = [
- ["Gender violence, constitutional and legal protection","2024: Q8, 14(b), 16(b). 2025: Q8, 14(b), 16(b). 2026: Q8"],
- ["Social discrimination and inclusive practices","2024: 14(a), 14(b). 2025: Q7, 14(b), 16(b). 2026: Q3, Q7, 14(a), 14(b)"],
- ["Secularism and the state's distance from religion; Indian and Western models","2024: Q3, 12(a). 2025: Q3, 12(a). 2026: Q4, 12(a), 12(b)"],
- ["Inductive and deductive reasoning, hypothesis","2024: Q5, 13(a). 2025: 13(a), 13(b). 2026: Q5, Q6, 13(a)"],
- ["Empiricism and skepticism","2024: 13(b). 2025: Q5. 2026: 13(b)"],
- ["Responsibilities of scientists and ethics in science","2024: 15(a). 2025: Q9, 15(a), 15(b). 2026: Q9, 15(b), 16(b)"],
- ["Transparency and fairness in science","2024: Q9, 15(b). 2025: Q10. 2026: Q10, 15(a)"],
- ["Pluralism, tolerance and fraternity","2024: 11(a). 2025: Q1, 11(a). 2026: 11(a), 11(b), 16(a)"],
- ["Citizen participation in democracy","2024: 11(b). 2026: Q1, Q2"]
+ ["Scientific inventions: benefit and unfair use","2024: Q10, 15(a), 16(a). Apr 2025: Q10. Nov 2025: 15(b). 2026: Q9, 15(b)"],
+ ["Role and responsibilities of scientists","2024: 15(a). Apr 2025: Q9, 15(b). Nov 2025: Q9, 15(a). 2026: Q9, 16(b)"],
+ ["Transparency and fairness in science","2024: Q9, 15(b). Apr 2025: 15(a). Nov 2025: Q10. 2026: Q10, 15(a)"],
+ ["Inductive and deductive reasoning, hypothesis","2024: Q5, 13(a). Apr 2025: 13(a). Nov 2025: 13(a), 13(b). 2026: Q5, Q6, 13(a)"],
+ ["Empiricism, skepticism, scientific temper","2024: Q6, 13(b). Apr 2025: Q5, Q6, 13(b). Nov 2025: Q5. 2026: 13(b)"],
+ ["Secularism, Indian and Western models, state and religion","2024: Q3, 12(a), 12(b). Apr 2025: Q3, Q4, 12(a). Nov 2025: Q3, 12(a), 12(b). 2026: Q4, 12(a), 12(b)"],
+ ["Pluralism, tolerance, fraternity, liberty","2024: 11(a). Apr 2025: Q2, 11(a). Nov 2025: Q1, 11(a). 2026: 11(a), 11(b), 16(a)"],
+ ["Citizen participation and world democracies","2024: 11(b). Apr 2025: Q1, 11(b), 16(a). Nov 2025: Q2. 2026: Q1, Q2, 16(a)"],
+ ["Social discrimination, ethical reasoning, inclusive practices","2024: 14(a), 14(b). Apr 2025: Q7, Q8, 12(b), 14(a). Nov 2025: Q7, 14(b), 16(b). 2026: Q3, Q7, 14(a), 14(b)"],
+ ["Gender bias, gender violence, constitutional protection","2024: Q8, 14(b), 16(b). Apr 2025: 14(b), 16(b). Nov 2025: Q8, 14(b), 16(b). 2026: Q8"]
 ];
