@@ -20,6 +20,9 @@ Live at https://karthi21c.github.io/GE3791-HVE/
 4. **Agent**: in the CA Register, clear last year's rows in `Agent_Tasks`, `Agent_PINs` and `Agent_Log`, update `Agent_FAQ`, then run Class agent > Make student PINs. Use a fresh roster and Attendance sheet for the new class.
 5. **Check**: open the site on a phone. Test the exam banner, the revision tabs, the quiz and the agent.
 
+## If a change does not show
+GitHub Pages can take a few minutes, and phones keep old copies. When you change a `.js` file, also change the `?v=` number after its name in `revision.html` and `index.html` (for example `v=20261111`), then refresh.
+
 ## Rules
 - Keep question papers, PDFs and slides in Google Drive as view-only. Do not put downloadable files in this repository (it is public).
 - Do not reproduce copyrighted textbooks. Use your own notes and summaries.

@@ -53,7 +53,7 @@
     <div><dt>Periods</dt><dd>35 (30 syllabus and 5 practice)</dd></div>
     <div><dt>Lecture days</dt><dd>Monday, Wednesday, Friday</dd></div>
     <div><dt>Teaching dates</dt><dd>01 Jul 2026 to 05 Oct 2026</dd></div>
-    <div><dt>End-semester exam</dt><dd>18 Nov 2026, FN</dd></div>
+    <div><dt>End-semester exam</dt><dd id="ex-fact">18 Nov 2026, FN</dd></div>
   </dl>
 
   <h3>What the course aims to do</h3>
@@ -193,7 +193,7 @@
       <tr><th scope="row">Unit assignments</th><td>One written task per unit, linked to a course outcome (see below).</td><td>Set in each unit's practice period</td></tr>
       <tr><th scope="row">Monthly assessments</th><td>Assessment on the units covered so far.</td><td>10–16 Aug and 14–20 Sep</td></tr>
       <tr><th scope="row">Internal assessment tests and model examination</th><td>Held by the college as per the Anna University academic calendar.</td><td>Announced by the college</td></tr>
-      <tr><th scope="row">End-semester examination</th><td>Conducted by Anna University under Regulation 2021.</td><td>18 Nov 2026, forenoon (FN)</td></tr>
+      <tr><th scope="row">End-semester examination</th><td>Conducted by Anna University under Regulation 2021.</td><td id="ex-asm">18 Nov 2026, forenoon (FN)</td></tr>
     </tbody>
   </table></div>
   <p class="note">Mark weightage follows the Anna University Regulation 2021 scheme and is announced by the course coordinator.</p>
@@ -214,13 +214,18 @@
 </main>
 <footer class="foot">
   <p>GE3791 Human Values and Ethics, Department of Mechanical Engineering, Krishnasamy College of Engineering and Technology, Cuddalore. Affiliated to Anna University.</p>
-  <p>Last updated: 10 Nov 2026</p>
+  <p>Last updated: <span id="upd">10 Nov 2026</span></p>
 </footer>
+<script src="site-config.js?v=20261110b"></script>
 <script>
 (function () {
-  var el = document.getElementById('exam-cd');
-  var d = Math.ceil((new Date(2026, 10, 18) - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
-  if (el) el.textContent = d > 1 ? '18 November 2026, FN · ' + d + ' days to go' : d === 1 ? '18 November 2026, FN · tomorrow' : d === 0 ? 'Exam today (FN). All the best!' : '18 November 2026, FN';
+  var S = window.SITE; if (!S) return;
+  var p = S.examDate.split('-').map(Number);
+  var d = Math.ceil((new Date(p[0], p[1] - 1, p[2]) - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
+  var base = S.examLabel + ', ' + S.examSession;
+  function set(id, t) { var e = document.getElementById(id); if (e) e.textContent = t; }
+  set('exam-cd', d > 1 ? base + ' · ' + d + ' days to go' : d === 1 ? base + ' · tomorrow' : d === 0 ? 'Exam today (' + S.examSession + '). All the best!' : base);
+  set('ex-fact', base); set('ex-asm', base); set('upd', S.updated);
 })();
 </script>
 <script>
