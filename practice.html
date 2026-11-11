@@ -15,17 +15,19 @@ main{max-width:640px;margin:0 auto;padding:16px}a{color:var(--acc)}h1{font-size:
 .fb{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
 table{width:100%;border-collapse:collapse;font-size:15px}td,th{border:1px solid var(--line);padding:6px 8px;text-align:left}
 @media print{body{display:none}}
-</style></head><body><main>
+.kbanner{display:block;background:#fff;border-bottom:3px solid #1f3864;margin:0 0 8px}.kbanner img{display:block;width:100%;max-width:1045px;height:auto;margin:0 auto}</style></head><body><a class="kbanner" href="index.html"><img src="assets/kcet-banner.jpg" width="1045" height="205" alt="Krishnasamy College of Engineering and Technology, Cuddalore. Affiliated to Anna University, accredited by NAAC, approved by AICTE."></a><main>
 <p class="sub"><a href="index.html">← Course home</a> · <a href="revision.html">Exam revision</a></p>
 <h1>GE3791 Practice Quiz</h1>
 <p class="sub">25 questions, 5 from each unit. You see the answer straight after each question.</p>
 <div id="app" class="card" aria-live="polite"></div>
 </main>
-<script src="practice-data.js?v=20261111a"></script>
+<script src="site-config.js?v=20261111b"></script>
+<script src="track.js?v=20261111b"></script>
+<script src="practice-data.js?v=20261111b"></script>
 <script>
 (function(){
 var Q=window.PRACTICE||[],app=document.getElementById('app'),names=['','Unit I Democratic Values','Unit II Secular Values','Unit III Scientific Values','Unit IV Social Ethics','Unit V Scientific Ethics'];
-var items,i,score,per,answered;
+var items,i,score,per,answered,wrong=[];
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
 function best(set){try{if(set!=null)localStorage.setItem('hve_best',String(set));return localStorage.getItem('hve_best')}catch(e){return null}}
@@ -35,8 +37,8 @@ function start(){
  document.getElementById('s').onclick=begin;
 }
 function begin(){
- items=Q.map(function(x){var idx=shuffle([0,1,2,3]);return{u:x.u,q:x.q,e:x.e,o:idx.map(function(k){return x.o[k]}),a:idx.indexOf(x.a)}});
- i=0;score=0;per={1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};show();
+ items=Q.map(function(x,n){var idx=shuffle([0,1,2,3]);return{n:n+1,u:x.u,q:x.q,e:x.e,o:idx.map(function(k){return x.o[k]}),a:idx.indexOf(x.a)}});
+ i=0;score=0;wrong=[];per={1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};show();
 }
 function show(){
  var x=items[i];answered=false;
@@ -46,13 +48,14 @@ function show(){
  [].forEach.call(app.querySelectorAll('.opt'),function(b){b.onclick=function(){pick(+b.dataset.k)}});
 }
 function pick(k){
- if(answered)return;answered=true;var x=items[i],ok=k===x.a;per[x.u][1]++;if(ok){score++;per[x.u][0]++}
+ if(answered)return;answered=true;var x=items[i],ok=k===x.a;per[x.u][1]++;if(!ok)wrong.push(x.n);if(ok){score++;per[x.u][0]++}
  [].forEach.call(app.querySelectorAll('.opt'),function(b,j){b.disabled=true;if(j===x.a)b.classList.add('ok');else if(j===k)b.classList.add('bad')});
  var last=i===items.length-1;
  document.getElementById('fb').innerHTML='<div class="fb"><b>'+(ok?'Correct.':'Not quite.')+'</b> '+esc(x.e)+'</div><button class="go" id="n">'+(last?'See my result':'Next')+'</button>';
  var n=document.getElementById('n');n.focus();n.onclick=function(){i++;if(i<items.length)show();else done()};
 }
 function done(){
+ hveTrack('quiz',score+'|'+[1,2,3,4,5].map(function(u){return per[u][0]}).join(','));if(wrong.length)hveTrack('qwrong',wrong.join(','));
  var prev=best();if(prev==null||score>Number(prev))best(score);
  var rows='',weak=[];
  for(var u=1;u<=5;u++){var p=per[u],pc=Math.round(p[0]/p[1]*100);rows+='<tr><td>'+esc(names[u])+'</td><td>'+p[0]+' / '+p[1]+'</td></tr>';if(pc<80)weak.push(u)}

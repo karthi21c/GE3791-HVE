@@ -16,7 +16,9 @@ button{cursor:pointer;background:var(--acc);color:#fff;border-color:var(--acc)}b
 .m.me{align-self:flex-end;background:var(--me)}.m.bot{align-self:flex-start;background:var(--card);border:1px solid var(--line)}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.chips button{padding:6px 10px;font-size:14px;flex:none}
 small{color:var(--mut);display:block;margin-top:8px;font-size:12.5px}a{color:var(--acc)}
-</style></head><body><main>
+.kbanner{display:block;background:#fff;border-bottom:3px solid #1f3864;margin:0 0 8px}.kbanner img{display:block;width:100%;max-width:1045px;height:auto;margin:0 auto}</style></head><body>
+<a class="kbanner" href="index.html"><img src="assets/kcet-banner.jpg" width="1045" height="205" alt="Krishnasamy College of Engineering and Technology, Cuddalore. Affiliated to Anna University, accredited by NAAC, approved by AICTE."></a>
+<main>
 <h1>GE3791 Class Agent</h1>
 <p class="sub">Human Values and Ethics · KCET Cuddalore · ask in Tamil or English / தமிழிலோ ஆங்கிலத்திலோ கேளுங்கள்</p>
 <details class="card"><summary>My attendance (Reg. No and PIN) / என் வருகை</summary>
@@ -26,14 +28,15 @@ small{color:var(--mut);display:block;margin-top:8px;font-size:12.5px}a{color:var
 <form id="f" class="row"><input id="q" placeholder="Type your question / கேள்வியை எழுதுங்கள்" maxlength="400" autocomplete="off" style="flex:4"><button style="flex:1">Send</button></form>
 <small>Do not type phone numbers or private details. Chats are kept for 4 weeks, then deleted. Answers come from your teacher's approved FAQ; anything else goes to your teacher. AI explanations, when shown, are marked and may be wrong.</small>
 </main>
+<script src="site-config.js?v=20261111b"></script>
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbx_z1HNnk7TNlydstY3ZV54H9-Et5BqhD4vHFDTIJULgHJoA9qQdqnFmaUv-VDqZLOvdw/exec';
+const API = (window.SITE && window.SITE.analytics && window.SITE.analytics.endpoint) || 'PASTE_WEB_APP_URL_HERE';
 const chat = document.getElementById('chat'), q = document.getElementById('q');
 function add(t, c){ const d = document.createElement('div'); d.className = 'm ' + c; d.textContent = t; chat.appendChild(d); chat.scrollTop = chat.scrollHeight; return d; }
 async function ask(text){
   text = text.trim(); if(!text) return; add(text, 'me'); q.value = '';
   const wait = add('…', 'bot');
-  if(API.startsWith('PASTE')){ wait.textContent = 'The agent is not connected yet (teacher: paste the web app URL in agent.html).'; return; }
+  if(API.startsWith('PASTE')){ wait.textContent = 'The agent is not connected yet (teacher: paste the web app URL in site-config.js).'; return; }
   try{
     const r = await fetch(API, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
       body: JSON.stringify({message:text, reg:document.getElementById('reg').value, pin:document.getElementById('pin').value})});
@@ -42,4 +45,5 @@ async function ask(text){
 }
 document.getElementById('f').addEventListener('submit', e => { e.preventDefault(); ask(q.value); });
 document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => ask(b.dataset.q));
-</script></body></html>
+</script><script src="track.js?v=20261111b"></script>
+</body></html>

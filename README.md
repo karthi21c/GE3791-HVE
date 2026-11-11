@@ -36,3 +36,11 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - Listen buttons on the Top repeated tab use the phone's own text-to-speech. Tamil needs a Tamil voice installed on the phone; if it is missing, the page says so.
 - materials.js now lists one Drive folder per unit. Keep each folder shared "Anyone with the link: Viewer" and switch off download on the files. Files can still be listed by name under `files`.
 - When you change any data file, change the `?v=` string in the script tags so phones fetch the new copy.
+
+## Added in round 5: banner and visitor counting
+- assets/kcet-banner.jpg is the college letterhead, shown at the top of every page.
+- One place for the Apps Script web app URL: SITE.analytics.endpoint in site-config.js. The class agent page and the usage counter both read it, so agent.html no longer needs editing.
+- track.js counts anonymously (random device code, no names, no registration numbers, no cookies). Learners can stop counting on their device from the footer link.
+- Optional GoatCounter: sign up free at goatcounter.com, then put your site code in SITE.analytics.goatcounter.
+- Usage analytics in Apps Script: add Analytics.gs to the same project, replace Code.gs and Agent.gs, redeploy the web app as a new version, then use the menu Usage analytics > Refresh usage summary.
+- Each new cohort: set cohort in site-config.js. Usage rows carry the cohort label, so years can be compared.
