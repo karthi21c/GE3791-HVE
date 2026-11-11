@@ -44,3 +44,9 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - Optional GoatCounter: sign up free at goatcounter.com, then put your site code in SITE.analytics.goatcounter.
 - Usage analytics in Apps Script: add Analytics.gs to the same project, replace Code.gs and Agent.gs, redeploy the web app as a new version, then use the menu Usage analytics > Refresh usage summary.
 - Each new cohort: set cohort in site-config.js. Usage rows carry the cohort label, so years can be compared.
+
+## K-level rule (decided Nov 2026)
+- The five course outcomes keep the K levels printed in the syllabus (CO1 K2, CO2 K3, CO3 K4, CO4 K3, CO5 K4). These are the targets.
+- Every class activity and assignment is tagged to the outcome it builds, at or below that outcome's level.
+- Only exception: the Unit 5 mini-project, pitched at K5 and shown as a stretch task under CO4.
+- Each year, when you add or change an activity, check its tag against this rule before publishing.
