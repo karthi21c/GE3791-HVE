@@ -11,10 +11,10 @@
   function notice() {
     if (!(A.endpoint || A.goatcounter)) return;
     var p = document.createElement('p');
-    p.className = 'sub'; p.id = 'hve-priv'; p.style.cssText = 'font-size:13px;margin:14px 0;text-align:center';
+    p.className = 'sub'; p.id = 'hve-priv'; p.style.cssText = 'font-size:13px;margin:14px 0;text-align:center;color:inherit;opacity:.9';
     var isOff = off || navigator.doNotTrack === '1';
     p.innerHTML = 'This site counts visits anonymously to improve the course. It stores no names, registration numbers or cookies. ' +
-      '<a href="#" id="hve-tg">' + (isOff ? 'Start counting on this device' : 'Stop counting on this device') + '</a><span id="hve-reach"></span>';
+      '<a href="#" id="hve-tg" style="color:inherit;text-decoration:underline">' + (isOff ? 'Start counting on this device' : 'Stop counting on this device') + '</a><span id="hve-reach"></span>';
     var host = document.querySelector('footer') || document.querySelector('main') || document.body;
     host.appendChild(p);
     document.getElementById('hve-tg').onclick = function (e) { e.preventDefault(); window.hveTrackOff(!isOff); location.reload(); };
