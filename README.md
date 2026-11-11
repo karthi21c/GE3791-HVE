@@ -38,7 +38,7 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - When you change any data file, change the `?v=` string in the script tags so phones fetch the new copy.
 
 ## Added in round 5: banner and visitor counting
-- assets/kcet-banner.jpg is the college letterhead, shown at the top of every page.
+- kcet-banner.jpg is the college letterhead, shown at the top of every page.
 - One place for the Apps Script web app URL: SITE.analytics.endpoint in site-config.js. The class agent page and the usage counter both read it, so agent.html no longer needs editing.
 - track.js counts anonymously (random device code, no names, no registration numbers, no cookies). Learners can stop counting on their device from the footer link.
 - Optional GoatCounter: sign up free at goatcounter.com, then put your site code in SITE.analytics.goatcounter.

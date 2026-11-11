@@ -20,7 +20,7 @@
     document.getElementById('hve-tg').onclick = function (e) { e.preventDefault(); window.hveTrackOff(!isOff); location.reload(); };
     if (A.endpoint && A.showCounter && document.body.getAttribute('data-reach') !== null) {
       fetch(A.endpoint + '?op=stats').then(function (r) { return r.json(); }).then(function (j) {
-        if (j && j.devices >= (A.counterMin || 25)) document.getElementById('hve-reach').textContent = ' · ' + j.devices + ' learners have used this site.';
+        if (j && j.devices >= (A.counterMin || 25)) document.getElementById('hve-reach').textContent = ' · ' + j.devices + ' learners and ' + j.visits + ' visits so far.';
       }).catch(function () {});
     }
   }
@@ -34,11 +34,17 @@
       return v;
     } catch (e) { return 'na'; }
   }
+  var src = '';
+  try {
+    var q = /[?&](?:ref|src)=([A-Za-z0-9_-]{1,12})/.exec(location.search);
+    if (q) localStorage.setItem('hve_src', q[1].toLowerCase());
+    src = localStorage.getItem('hve_src') || '';
+  } catch (e) {}
   var page = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
 
   function send(ev, val) {
     if (!A.endpoint) return;
-    var body = JSON.stringify({ op: 'ev', id: id(), page: page, ev: ev, val: String(val == null ? '' : val).slice(0, 80), cohort: (window.SITE && window.SITE.cohort) || '' });
+    var body = JSON.stringify({ op: 'ev', id: id(), page: page, ev: ev, val: String(val == null ? '' : val).slice(0, 80), cohort: (window.SITE && window.SITE.cohort) || '', src: src });
     try {
       if (navigator.sendBeacon && navigator.sendBeacon(A.endpoint, new Blob([body], { type: 'text/plain' }))) return;
     } catch (e) {}
