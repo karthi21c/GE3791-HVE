@@ -11,7 +11,7 @@
   function notice() {
     if (!(A.endpoint || A.goatcounter)) return;
     var p = document.createElement('p');
-    p.className = 'sub'; p.id = 'hve-priv'; p.style.cssText = 'font-size:13px;margin:14px 0;text-align:center;color:inherit;opacity:.9';
+    p.className = 'sub'; p.id = 'hve-priv'; p.style.cssText = 'font-size:13px;line-height:1.6;margin:16px auto 0;padding-top:14px;max-width:548px;text-align:center;color:inherit;opacity:.9;border-top:1px solid rgba(128,128,128,.45)';
     var isOff = off || navigator.doNotTrack === '1';
     p.innerHTML = 'This site counts visits anonymously to improve the course. It stores no names, registration numbers or cookies. ' +
       '<a href="#" id="hve-tg" style="color:inherit;text-decoration:underline">' + (isOff ? 'Start counting on this device' : 'Stop counting on this device') + '</a><span id="hve-reach"></span>';
