@@ -1,0 +1,35 @@
+/* 13-mark answer map: how to lay out each repeated answer. Same order as KEYS in key-answers.js.
+   open = a ready first line; split = [heading, marks]; trap = a common mistake; total of each split = 13.
+   This is a suggested layout for students, not the official Anna University scheme. EACH YEAR: review. Plain text only. */
+window.KEYMAP = [
+{open:"Scientific inventions improve life, but the same knowledge can be misused, so every invention needs an ethical test: who benefits and who is harmed?",
+ split:[["Meaning of invention and the ethical test",2],["Benefits to society, 4 examples across health, food, energy and communication",3],["Equity: reaching rural and poor people",1],["Unfair application, any 2 examples (nuclear weapons, CFCs, data misuse, deepfakes)",3],["Dual use and remedies (laws, ethics committees)",2],["Duty of the scientist, Oppenheimer example",1],["Conclusion",1]],
+ trap:"Writing only the benefits. When the question says 'unfair application', give two named examples with the harm they caused."},
+{open:"A scientist's work gives society power, and with that power comes a duty to use it honestly, safely and for public good.",
+ split:[["Role of scientists (discover, check, teach, advise)",2],["Honesty and integrity",2],["Safety and care for people and environment",2],["Foresight and accountability",3],["Fair credit and respect for others",1],["Example: Oppenheimer or another case",2],["Conclusion",1]],
+ trap:"Listing roles without responsibilities. Keep two separate headings: role, then responsibilities."},
+{open:"Transparency means being open about data, methods, funding and conflicts of interest; fairness means giving everyone honest credit and equal treatment.",
+ split:[["Meaning of transparency and fairness",2],["Why it matters (checking, trust, error correction)",2],["Practices: data sharing, peer review, declaring conflicts of interest",3],["International collaboration: ethics approval, open data, fair credit",3],["Consequence of failure, with an example",2],["Conclusion",1]],
+ trap:"Giving only definitions. The question usually asks about international collaboration, so give it its own heading."},
+{open:"Inductive thinking moves from many observations to a general rule; deductive thinking applies a general rule to a particular case.",
+ split:[["Inductive, with an example",3],["Deductive, with an example",3],["Comparison table, at least 4 differences",3],["How science uses both together",2],["Limits of each",1],["Conclusion",1]],
+ trap:"Mixing up the direction of reasoning. Remember: induction goes particular to general, deduction goes general to particular. Draw the table."},
+{open:"Scientific temper is a habit of questioning, testing claims against evidence and keeping an open mind.",
+ split:[["Empiricism and skepticism, with meanings",3],["Rationalism and how the three work together",2],["Example: Galileo or another scientist",2],["Scientific temper and Article 51A(h)",2],["Impact on society: superstition, fake news, safety",2],["Conclusion",2]],
+ trap:"Forgetting the constitutional link. Always quote Article 51A(h) in the temper part."},
+{open:"Secularism means the state has no religion of its own and treats every faith with equal respect.",
+ split:[["Meaning of secularism",2],["Western model (strict separation, France)",2],["Indian model (equal respect, principled distance)",3],["Constitutional provisions: Preamble, Articles 14 to 16, 25 to 28",3],["Bommai case and historical roots (Ashoka, Akbar)",2],["Conclusion",1]],
+ trap:"Saying Indian secularism is the same as the Western wall of separation. Show the difference clearly, ideally in a small table."},
+{open:"A democracy works only when citizens accept differences and live together with equal respect, liberty and fraternity.",
+ split:[["Meanings: pluralism, tolerance, fraternity, liberty",3],["Preamble and Ambedkar on fraternity",2],["Freedom of expression, Article 19(1)(a) and 19(2)",2],["Historical example and contemporary example",3],["Framework to promote these values",2],["Conclusion",1]],
+ trap:"Writing the four terms as a list of one-line definitions. Add one example for each to earn the full marks."},
+{open:"In a democracy, power belongs to the people, and citizens must take part for it to work.",
+ split:[["Forms of citizen participation (voting, Gram Sabha, RTI, consultation)",3],["Why it matters, and what happens without it",2],["Example: RTI movement or Gram Sabha",1],["Three world democracies: French, American, Indian",4],["Common values and differences",2],["Conclusion",1]],
+ trap:"Writing all three struggles at equal length without comparing them. Close with common values and one key difference."},
+{open:"Social discrimination is unequal treatment based on caste, religion, gender, disability, class or language, and ethical reasoning helps us respond fairly.",
+ split:[["Meaning and examples of discrimination",2],["Four steps of ethical reasoning, applied to a case",3],["Constitutional articles and laws",3],["Why both ethics and law are needed",1],["Inclusive practices: education and workplace",3],["Conclusion",1]],
+ trap:"Writing only theory. The question often gives a situation, so apply the four steps to it."},
+{open:"Gender bias is unequal treatment based on gender, and when it turns into harm it becomes gender violence, which the Constitution and the law forbid.",
+ split:[["Gender bias and gender violence, with forms",3],["Causes and effects",2],["Constitutional protection: Articles 14, 15, 16, 21, 51A(e)",3],["Laws: Dowry Prohibition Act, Domestic Violence Act, POSH Act, Vishaka",3],["Workplace and wider remedies (ICC, helpline, awareness)",1],["Conclusion",1]],
+ trap:"Naming an Act without its year or purpose. Give the year and one line on what it does."}
+];

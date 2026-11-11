@@ -23,7 +23,7 @@ details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;fo
 .bar{height:10px;background:var(--line);border-radius:999px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--acc);width:0;transition:width .3s}
 .chk{display:flex;gap:10px;align-items:center;margin:8px 0;font-weight:600}.chk input{width:22px;height:22px;flex:none}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}.btn{padding:8px 14px;border-radius:8px;border:1px solid var(--acc);background:var(--card);color:var(--acc);font:inherit;font-size:14px;cursor:pointer;text-decoration:none}
-.ta{background:var(--hi);color:#1b2437;border-radius:8px;padding:8px 12px;margin-top:8px}.ta li{margin:3px 0}
+.map{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0}.map table{width:100%;border-collapse:collapse;margin:6px 0}.map td{padding:4px 6px;border-top:1px solid var(--line);font-size:14px}.map td:last-child{text-align:right;white-space:nowrap;font-weight:600}.say{font:inherit;font-size:13px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:4px 12px;margin:4px 6px 4px 0;cursor:pointer}.say[aria-pressed=true]{background:#2c5394;color:#fff}.trap{color:#7a3b00;font-size:14px}.ta{background:var(--hi);color:#1b2437;border-radius:8px;padding:8px 12px;margin-top:8px}.ta li{margin:3px 0}
 @media print{body{display:none}}
 </style></head><body><main>
 <p class="sub"><a href="index.html">← Course home</a></p>
@@ -49,11 +49,12 @@ details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;fo
 <div class="card"><h2>Practise more</h2><ul><li><a href="practice.html">Practice quiz</a> (25 questions across all five units)</li><li><a href="quiz.html">Case quiz</a> (Unit V, Cooling Tower Report)</li><li><a href="simulation.html">Simulation</a>: Meena's Next 24 Hours</li><li><a href="agent.html">Class agent</a>: ask about assignments, notes and the syllabus</li></ul></div>
 <p class="foot">Prepared as a revision aid for students of this class. Practice questions are based on the syllabus; previous-paper questions are listed for practice and are not a prediction of the next paper. Tamil terms are given to help understanding. Last updated: <span id="upd">10 Nov 2026</span>.</p>
 </main>
-<script src="site-config.js?v=20261110d"></script>
-<script src="past-papers.js?v=20261110d"></script>
-<script src="key-answers.js?v=20261110d"></script>
-<script src="materials.js?v=20261110d"></script>
-<script src="key-answers-ta.js?v=20261110d"></script>
+<script src="site-config.js?v=20261111a"></script>
+<script src="past-papers.js?v=20261111a"></script>
+<script src="key-answers.js?v=20261111a"></script>
+<script src="materials.js?v=20261111a"></script>
+<script src="key-answers-ta.js?v=20261111a"></script>
+<script src="key-answers-map.js?v=20261111a"></script>
 <script>
 const U=[
 {n:"Unit I",t:"Democratic Values",ta:"ஜனநாயக மதிப்புகள்",
@@ -94,14 +95,24 @@ function asked(n){
  return h?'<h3>Asked in previous Anna University papers</h3>'+h:'';
 }
 function mats(n){
- const L=(window.MATERIALS||{})[n];if(!L||!L.length)return '';
- return '<h3>Class slides and handouts (view only)</h3><p class="sub">Opens in Google Drive. Large slide files need Wi-Fi or good data.</p><ul>'+L.map(m=>`<li><a href="https://drive.google.com/file/d/${m.id}/view" target="_blank" rel="noopener">${esc(m.t)}</a> <span class="sub">(${esc(m.kind)}, ${esc(m.mb)})</span></li>`).join('')+'</ul>';
+ const M=(window.MATERIALS||{})[n]||{};const L=M.files||[];if(!L.length&&!M.folder)return '';
+ return '<h3>Class slides and handouts (view only)</h3><p class="sub">Opens in Google Drive. Large slide files need Wi-Fi or good data.</p>'+(M.folder?`<p><a href="https://drive.google.com/drive/folders/${M.folder}" target="_blank" rel="noopener"><b>Open the ${esc(M.label||'unit')} folder (view only)</b></a></p>`:'')+(L.length?'<ul>'+L.map(m=>`<li><a href="https://drive.google.com/file/d/${m.id}/view" target="_blank" rel="noopener">${esc(m.t)}</a> <span class="sub">(${esc(m.kind)}, ${esc(m.mb)})</span></li>`).join('')+'</ul>':'');
 }
+function mapHtml(i){const m=(window.KEYMAP||[])[i];if(!m)return '';
+ return `<div class="map"><b>13-mark answer map</b><p class="sub">Start with: ${esc(m.open)}</p><table>${m.split.map(r=>`<tr><td>${esc(r[0])}</td><td>${r[1]}</td></tr>`).join('')}<tr><td><b>Total</b></td><td>13</td></tr></table><p class="trap"><b>Avoid:</b> ${esc(m.trap)}</p><p class="sub">A suggested layout, not the official scheme.</p></div>`}
+function stopSay(){try{speechSynthesis.cancel()}catch(e){}document.querySelectorAll('.say[aria-pressed=true]').forEach(b=>b.setAttribute('aria-pressed','false'))}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.say');if(!b)return;
+ if(!('speechSynthesis' in window)){alert('Listening is not supported on this browser.');return}
+ const on=b.getAttribute('aria-pressed')==='true';stopSay();if(on)return;
+ const i=+b.dataset.i,ta=b.dataset.l==='ta',list=ta?(window.KEYS_TA||[])[i]:(window.KEYS||[])[i].pts;if(!list)return;
+ const u=new SpeechSynthesisUtterance(list.join('. '));u.lang=ta?'ta-IN':'en-IN';u.rate=0.9;
+ const vs=speechSynthesis.getVoices();if(ta&&vs.length&&!vs.some(v=>/^ta/i.test(v.lang))){alert('No Tamil voice is installed on this phone. Install it in the phone settings under Text-to-speech, or use English.');return}
+ u.onend=u.onerror=()=>b.setAttribute('aria-pressed','false');b.setAttribute('aria-pressed','true');speechSynthesis.speak(u)});
 function topHtml(){
  return '<div class="card"><h2>Top repeated questions</h2><p class="sub">These topics came up in all or most of the last four papers. Learn them first. Tap a topic for a model-answer outline, with a short Tamil gist.</p><label class="chk"><input type="checkbox" id="done"> I have read this list</label>'+
- (window.KEYS||[]).map((k,i)=>{const ta=(window.KEYS_TA||[])[i];return `<details><summary>${esc(k.title)}</summary><p class="sub">${esc(k.papers)}. Asked as: ${esc(k.ask)}</p><ul>${k.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>${ta?`<div class="ta"><b>தமிழ் சுருக்கம் (Tamil gist)</b><ul>${ta.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`:''}</details>`}).join('')+'</div>';
+ (window.KEYS||[]).map((k,i)=>{const ta=(window.KEYS_TA||[])[i];return `<details><summary>${esc(k.title)}</summary><p class="sub">${esc(k.papers)}. Asked as: ${esc(k.ask)}</p>${mapHtml(i)}<h3>Model answer points</h3><button class="say" data-i="${i}" data-l="en" aria-pressed="false">&#128266; Listen (English)</button><ul>${k.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>${ta?`<div class="ta"><b>தமிழ் சுருக்கம் (Tamil gist)</b> <button class="say" data-i="${i}" data-l="ta" aria-pressed="false">&#128266; கேளுங்கள்</button><ul>${ta.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`:''}</details>`}).join('')+'</div>';
 }
-function show(k){
+function show(k){stopSay();
  [...T.children].forEach((b,j)=>b.setAttribute('aria-selected',k===j));
  if(k===0){V.innerHTML=topHtml();bindDone('t');try{sessionStorage.setItem('u',0)}catch(e){}return}
  const i=k-1,u=U[i];

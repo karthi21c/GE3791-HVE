@@ -30,3 +30,9 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - Keep question papers, PDFs and slides in Google Drive as view-only. Do not put downloadable files in this repository (it is public).
 - Do not reproduce copyrighted textbooks. Use your own notes and summaries.
 - Syllabus changes (a new regulation): update the unit text in `index.html` and the `U` array inside `revision.html`.
+
+## Added in round 4
+- key-answers-map.js: the 13-mark answer map (suggested mark split, opening line, common mistake) for each repeated topic, same order as key-answers.js. Review it each year.
+- Listen buttons on the Top repeated tab use the phone's own text-to-speech. Tamil needs a Tamil voice installed on the phone; if it is missing, the page says so.
+- materials.js now lists one Drive folder per unit. Keep each folder shared "Anyone with the link: Viewer" and switch off download on the files. Files can still be listed by name under `files`.
+- When you change any data file, change the `?v=` string in the script tags so phones fetch the new copy.
