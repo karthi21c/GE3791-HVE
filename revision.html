@@ -20,6 +20,10 @@ table{width:100%;border-collapse:collapse;font-size:14.5px}td,th{border:1px soli
 details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;font-weight:600}
 .tip{background:var(--hi);color:#1b2437;border-radius:8px;padding:8px 10px;font-size:14px}
 .foot{color:var(--mut);font-size:12.5px;margin:20px 0}
+.bar{height:10px;background:var(--line);border-radius:999px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--acc);width:0;transition:width .3s}
+.chk{display:flex;gap:10px;align-items:center;margin:8px 0;font-weight:600}.chk input{width:22px;height:22px;flex:none}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}.btn{padding:8px 14px;border-radius:8px;border:1px solid var(--acc);background:var(--card);color:var(--acc);font:inherit;font-size:14px;cursor:pointer;text-decoration:none}
+.ta{background:var(--hi);color:#1b2437;border-radius:8px;padding:8px 12px;margin-top:8px}.ta li{margin:3px 0}
 @media print{body{display:none}}
 </style></head><body><main>
 <p class="sub"><a href="index.html">← Course home</a></p>
@@ -28,10 +32,11 @@ details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;fo
 <div class="banner"><b id="days">End-semester examination</b><span>Two units a day, then revise. Do not skip the practice questions.</span></div>
 
 <div class="card"><h2>3-day plan</h2>
+<div class="bar"><i id="barfill"></i></div><p class="sub" id="bartxt"></p>
 <table><tr><th>Day</th><th>Do this</th></tr>
-<tr><td>Day 1</td><td>Unit I Democratic Values and Unit II Secular Values. Read the key points, learn the terms, try the questions.</td></tr>
-<tr><td>Day 2</td><td>Unit III Scientific Values and Unit IV Social Ethics. Same method.</td></tr>
-<tr><td>Day 3</td><td>Unit V Scientific Ethics, then revision: read all five key-point lists again, redo the questions you missed, try the case quiz and simulation.</td></tr></table>
+<tr><td><label class="chk" style="margin:0"><input type="checkbox" data-k="d1"> Day 1</label></td><td>Unit I Democratic Values and Unit II Secular Values. Read the key points, learn the terms, try the questions.</td></tr>
+<tr><td><label class="chk" style="margin:0"><input type="checkbox" data-k="d2"> Day 2</label></td><td>Unit III Scientific Values and Unit IV Social Ethics. Same method.</td></tr>
+<tr><td><label class="chk" style="margin:0"><input type="checkbox" data-k="d3"> Day 3</label></td><td>Unit V Scientific Ethics, then revision: read all five key-point lists again, redo the questions you missed, try the case quiz and simulation.</td></tr></table>
 <p class="tip" style="margin-top:10px"><b>How to write a long answer:</b> one-line meaning, then 4 to 5 points each with an example, then one line of conclusion. If an idea is hard, think of it first in Tamil, then write it in English.</p></div>
 
 <div class="card"><h2>How the paper is set</h2><table id="pattern"></table>
@@ -40,13 +45,15 @@ details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;fo
 <div class="tabs" role="tablist" id="tabs"></div>
 <div id="unit"></div>
 
-<div class="card"><h2>Practise more</h2><ul><li><a href="quiz.html">Case quiz</a> (Unit V, Cooling Tower Report)</li><li><a href="simulation.html">Simulation</a>: Meena's Next 24 Hours</li><li><a href="agent.html">Class agent</a>: ask about assignments, notes and the syllabus</li></ul></div>
+<div class="card"><h2>Share with your class group</h2><p class="sub">Tap Copy, or send straight to WhatsApp. Messages are in English and Tamil.</p><div id="share"></div></div>
+<div class="card"><h2>Practise more</h2><ul><li><a href="practice.html">Practice quiz</a> (25 questions across all five units)</li><li><a href="quiz.html">Case quiz</a> (Unit V, Cooling Tower Report)</li><li><a href="simulation.html">Simulation</a>: Meena's Next 24 Hours</li><li><a href="agent.html">Class agent</a>: ask about assignments, notes and the syllabus</li></ul></div>
 <p class="foot">Prepared as a revision aid for students of this class. Practice questions are based on the syllabus; previous-paper questions are listed for practice and are not a prediction of the next paper. Tamil terms are given to help understanding. Last updated: <span id="upd">10 Nov 2026</span>.</p>
 </main>
-<script src="site-config.js?v=20261110c"></script>
-<script src="past-papers.js?v=20261110c"></script>
-<script src="key-answers.js?v=20261110c"></script>
-<script src="materials.js?v=20261110c"></script>
+<script src="site-config.js?v=20261110d"></script>
+<script src="past-papers.js?v=20261110d"></script>
+<script src="key-answers.js?v=20261110d"></script>
+<script src="materials.js?v=20261110d"></script>
+<script src="key-answers-ta.js?v=20261110d"></script>
 <script>
 const U=[
 {n:"Unit I",t:"Democratic Values",ta:"ஜனநாயக மதிப்புகள்",
@@ -77,6 +84,10 @@ const U=[
 ];
 const T=document.getElementById('tabs'),V=document.getElementById('unit');
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const P={};try{Object.assign(P,JSON.parse(localStorage.getItem('hve_p')||'{}'))}catch(e){}
+function saveP(){try{localStorage.setItem('hve_p',JSON.stringify(P))}catch(e){}}
+function prog(){const ks=['t','u1','u2','u3','u4','u5'],n=ks.filter(k=>P[k]).length;document.getElementById('barfill').style.width=(n/6*100)+'%';document.getElementById('bartxt').textContent=n+' of 6 steps revised (top repeated list and the five units). Tick each when you finish.';}
+function bindDone(key){const c=document.getElementById('done');if(!c)return;c.checked=!!P[key];c.onchange=()=>{P[key]=c.checked;saveP();prog()}}
 function asked(n){
  let h='';(window.PAPERS||[]).forEach(p=>{const L=p.items.filter(x=>x.u.includes(n));if(!L.length)return;
   h+=`<details><summary>${esc(p.name)} (${L.length})</summary><ul>`+L.map(x=>`<li><b>Q${esc(x.q)}</b> (Part ${x.part}, ${x.m} marks) ${esc(x.t)}</li>`).join('')+'</ul></details>';});
@@ -87,24 +98,24 @@ function mats(n){
  return '<h3>Class slides and handouts (view only)</h3><p class="sub">Opens in Google Drive. Large slide files need Wi-Fi or good data.</p><ul>'+L.map(m=>`<li><a href="https://drive.google.com/file/d/${m.id}/view" target="_blank" rel="noopener">${esc(m.t)}</a> <span class="sub">(${esc(m.kind)}, ${esc(m.mb)})</span></li>`).join('')+'</ul>';
 }
 function topHtml(){
- return '<div class="card"><h2>Top repeated questions</h2><p class="sub">These topics came up in all or most of the last four papers. Learn them first. Tap a topic for a model-answer outline.</p>'+
- (window.KEYS||[]).map(k=>`<details><summary>${esc(k.title)}</summary><p class="sub">${esc(k.papers)}. Asked as: ${esc(k.ask)}</p><ul>${k.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`).join('')+'</div>';
+ return '<div class="card"><h2>Top repeated questions</h2><p class="sub">These topics came up in all or most of the last four papers. Learn them first. Tap a topic for a model-answer outline, with a short Tamil gist.</p><label class="chk"><input type="checkbox" id="done"> I have read this list</label>'+
+ (window.KEYS||[]).map((k,i)=>{const ta=(window.KEYS_TA||[])[i];return `<details><summary>${esc(k.title)}</summary><p class="sub">${esc(k.papers)}. Asked as: ${esc(k.ask)}</p><ul>${k.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>${ta?`<div class="ta"><b>தமிழ் சுருக்கம் (Tamil gist)</b><ul>${ta.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`:''}</details>`}).join('')+'</div>';
 }
 function show(k){
  [...T.children].forEach((b,j)=>b.setAttribute('aria-selected',k===j));
- if(k===0){V.innerHTML=topHtml();try{sessionStorage.setItem('u',0)}catch(e){}return}
+ if(k===0){V.innerHTML=topHtml();bindDone('t');try{sessionStorage.setItem('u',0)}catch(e){}return}
  const i=k-1,u=U[i];
- V.innerHTML=`<div class="card"><h2>${u.n}: ${u.t}</h2><p class="sub">${u.ta}</p>
+ V.innerHTML=`<div class="card"><h2>${u.n}: ${u.t}</h2><p class="sub">${u.ta}</p><label class="chk"><input type="checkbox" id="done"> I have revised this unit</label>
  <h3>Key points</h3><ul>${u.sum.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>
  <h3>Key terms: English and Tamil</h3><table>${u.terms.map(t=>`<tr><td>${esc(t[0])}</td><td>${esc(t[1])}</td></tr>`).join('')}</table>
  <h3>2-mark practice questions</h3>${u.two.map(q=>`<details><summary>${esc(q[0])}</summary><p>${esc(q[1])}</p></details>`).join('')}
  <h3>Long-answer practice questions</h3>${u.long.map(q=>`<details><summary>${esc(q[0])}</summary><ul>${q[1].map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`).join('')}</div>`;
- V.firstElementChild.insertAdjacentHTML('beforeend',mats(i+1)+asked(i+1));
+ V.firstElementChild.insertAdjacentHTML('beforeend',mats(i+1)+asked(i+1));bindDone('u'+k);
  try{sessionStorage.setItem('u',k)}catch(e){}
 }
 (function(){const b=document.createElement('button');b.textContent='Top repeated';b.setAttribute('role','tab');b.onclick=()=>show(0);T.appendChild(b)})();
 U.forEach((u,i)=>{const b=document.createElement('button');b.textContent=u.n;b.setAttribute('role','tab');b.onclick=()=>show(i+1);T.appendChild(b)});
-let s=0;try{s=+sessionStorage.getItem('u')||0}catch(e){}show(s);
+let s=0;try{s=+sessionStorage.getItem('u')||0}catch(e){}const hm=location.hash.match(/^#u([1-5])$/);if(hm)s=+hm[1];show(s);
 const S=window.SITE||{};
 if(S.pattern)document.getElementById('pattern').innerHTML=S.pattern.map(r=>`<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join('');
 if(window.REPEATS)document.getElementById('repeats').innerHTML=REPEATS.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('');
@@ -114,5 +125,21 @@ if(S.examDate){const [y,m,dd]=S.examDate.split('-').map(Number);const d=Math.cei
  const base=`End-semester exam: ${S.examLabel}, ${S.examSession}`;
  el.textContent=d>1?`${base} · ${d} days to go`:d===1?`${base} · tomorrow`:d===0?'End-semester exam today. All the best!':base;}
 if(S.updated)document.getElementById('upd').textContent=S.updated;
+document.querySelectorAll('input[data-k]').forEach(c=>{c.checked=!!P[c.dataset.k];c.onchange=()=>{P[c.dataset.k]=c.checked;saveP()}});
+prog();
+(function(){
+ const S=window.SITE||{},url=(S.siteUrl||'')+'revision.html',ex=(S.examLabel||'')+' '+(S.examSession||''),pr=(S.siteUrl||'')+'practice.html';
+ const M=[
+ ['Day 1',`GE3791 Human Values and Ethics, exam ${ex}.\nDay 1: Unit I (Democratic Values) and Unit II (Secular Values). Read the key points, learn the terms, try the 2-mark questions.\n${url}\n\nநாள் 1: அலகு I (ஜனநாயக மதிப்புகள்) மற்றும் அலகு II (மதச்சார்பற்ற மதிப்புகள்). முக்கியக் குறிப்புகளைப் படித்து, சொற்களைக் கற்று, 2 மதிப்பெண் கேள்விகளை முயற்சிக்கவும்.`],
+ ['Day 2',`GE3791 Day 2: Unit III (Scientific Values) and Unit IV (Social Ethics). Same method: key points, terms, 2-mark questions, then one long answer each.\n${url}\n\nநாள் 2: அலகு III (அறிவியல் மதிப்புகள்) மற்றும் அலகு IV (சமூக நெறிமுறைகள்). அதே முறை: முக்கியக் குறிப்புகள், சொற்கள், 2 மதிப்பெண் கேள்விகள், பின் ஒவ்வொன்றிலும் ஒரு நீண்ட விடை.`],
+ ['Day 3',`GE3791 Day 3: Unit V (Scientific Ethics), then revision. Read the Top repeated list, redo the questions you missed, and take the practice quiz.\n${url}\n${pr}\n\nநாள் 3: அலகு V (அறிவியல் நெறிமுறைகள்), பின்னர் மறுபார்வை. அதிகம் கேட்கப்படும் கேள்விகளின் பட்டியலைப் படித்து, தவறிய கேள்விகளை மீண்டும் செய்து, பயிற்சி வினாடி வினாவை எழுதவும்.`],
+ ['Exam eve',`GE3791 exam tomorrow (${S.examSession||''}). Read only the summaries and key terms, sleep early, and carry your hall ticket and ID card. All the best!\n\nநாளை GE3791 தேர்வு. சுருக்கங்களையும் முக்கியச் சொற்களையும் மட்டும் படித்து, சீக்கிரம் தூங்கி, ஹால் டிக்கெட் மற்றும் அடையாள அட்டையை எடுத்துச் செல்லவும். வாழ்த்துகள்!`]];
+ const box=document.getElementById('share');if(!box)return;
+ M.forEach((m,i)=>{const d=document.createElement('div');d.innerHTML=`<p style="margin:8px 0 2px"><b>${esc(m[0])}</b></p><div class="btnrow"><button class="btn" type="button">Copy</button><a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(m[1])}">WhatsApp</a></div>`;
+  d.querySelector('button').onclick=function(){const b=this,done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)};
+   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(m[1]).then(done,()=>fb())}else fb();
+   function fb(){const t=document.createElement('textarea');t.value=m[1];document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(t)}};
+  box.appendChild(d)});
+})();
 document.addEventListener('contextmenu',e=>e.preventDefault());
 </script></body></html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GE3791 Practice Quiz</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#1b2437;--mut:#5b667d;--acc:#2e5496;--navy:#1f3864;--line:#d5dcea;--ok:#1b7f3b;--okbg:#e4f5e9;--bad:#b3261e;--badbg:#fdeceb}
+@media(prefers-color-scheme:dark){:root{--bg:#10151f;--card:#1a2130;--ink:#e8edf7;--mut:#9aa6bd;--acc:#7da4ec;--navy:#9db8ee;--line:#2d374c;--ok:#74d08f;--okbg:#173524;--bad:#ff8b84;--badbg:#3a1f1d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,"Noto Sans Tamil",sans-serif;-webkit-user-select:none;user-select:none}
+main{max-width:640px;margin:0 auto;padding:16px}a{color:var(--acc)}h1{font-size:22px;margin:4px 0;color:var(--navy)}.sub{color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:6px 0 12px}.bar i{display:block;height:100%;background:var(--acc)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.opt:focus-visible,.go:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.bad{border-color:var(--bad);background:var(--badbg)}.opt[disabled]{cursor:default}
+.go{padding:12px 18px;border-radius:10px;border:0;background:var(--acc);color:#fff;font:inherit;font-weight:700;cursor:pointer;margin-top:8px}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:15px}td,th{border:1px solid var(--line);padding:6px 8px;text-align:left}
+@media print{body{display:none}}
+</style></head><body><main>
+<p class="sub"><a href="index.html">← Course home</a> · <a href="revision.html">Exam revision</a></p>
+<h1>GE3791 Practice Quiz</h1>
+<p class="sub">25 questions, 5 from each unit. You see the answer straight after each question.</p>
+<div id="app" class="card" aria-live="polite"></div>
+</main>
+<script src="practice-data.js?v=20261110d"></script>
+<script>
+(function(){
+var Q=window.PRACTICE||[],app=document.getElementById('app'),names=['','Unit I Democratic Values','Unit II Secular Values','Unit III Scientific Values','Unit IV Social Ethics','Unit V Scientific Ethics'];
+var items,i,score,per,answered;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
+function best(set){try{if(set!=null)localStorage.setItem('hve_best',String(set));return localStorage.getItem('hve_best')}catch(e){return null}}
+function start(){
+ var b=best();
+ app.innerHTML='<h2 style="margin-top:0">Ready?</h2><p>Answer each question, read the explanation, then tap Next. Units that need more revision are shown at the end.</p>'+(b?'<p class="sub">Your best score on this device: '+esc(b)+' / '+Q.length+'</p>':'')+'<button class="go" id="s">Start the quiz</button>';
+ document.getElementById('s').onclick=begin;
+}
+function begin(){
+ items=Q.map(function(x){var idx=shuffle([0,1,2,3]);return{u:x.u,q:x.q,e:x.e,o:idx.map(function(k){return x.o[k]}),a:idx.indexOf(x.a)}});
+ i=0;score=0;per={1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};show();
+}
+function show(){
+ var x=items[i];answered=false;
+ var h='<p class="sub">Question '+(i+1)+' of '+items.length+' · '+esc(names[x.u])+'</p><div class="bar"><i style="width:'+(i/items.length*100)+'%"></i></div><p style="font-weight:600">'+esc(x.q)+'</p>';
+ x.o.forEach(function(t,k){h+='<button class="opt" data-k="'+k+'">'+esc(t)+'</button>'});
+ h+='<div id="fb"></div>';app.innerHTML=h;
+ [].forEach.call(app.querySelectorAll('.opt'),function(b){b.onclick=function(){pick(+b.dataset.k)}});
+}
+function pick(k){
+ if(answered)return;answered=true;var x=items[i],ok=k===x.a;per[x.u][1]++;if(ok){score++;per[x.u][0]++}
+ [].forEach.call(app.querySelectorAll('.opt'),function(b,j){b.disabled=true;if(j===x.a)b.classList.add('ok');else if(j===k)b.classList.add('bad')});
+ var last=i===items.length-1;
+ document.getElementById('fb').innerHTML='<div class="fb"><b>'+(ok?'Correct.':'Not quite.')+'</b> '+esc(x.e)+'</div><button class="go" id="n">'+(last?'See my result':'Next')+'</button>';
+ var n=document.getElementById('n');n.focus();n.onclick=function(){i++;if(i<items.length)show();else done()};
+}
+function done(){
+ var prev=best();if(prev==null||score>Number(prev))best(score);
+ var rows='',weak=[];
+ for(var u=1;u<=5;u++){var p=per[u],pc=Math.round(p[0]/p[1]*100);rows+='<tr><td>'+esc(names[u])+'</td><td>'+p[0]+' / '+p[1]+'</td></tr>';if(pc<80)weak.push(u)}
+ var msg=score>=Q.length*0.8?'Strong. Keep your revision light and rest well.':score>=Q.length*0.6?'Good base. Revise the units marked below.':'Do not worry. Use the revision page unit by unit, then try again.';
+ app.innerHTML='<h2 style="margin-top:0">Your score: '+score+' / '+items.length+'</h2><p>'+msg+'</p><table><tr><th>Unit</th><th>Correct</th></tr>'+rows+'</table>'+
+  (weak.length?'<p>Revise next: '+weak.map(function(u){return '<a href="revision.html#u'+u+'">'+esc(names[u])+'</a>'}).join(' · ')+'</p>':'<p>All units are at 4 out of 5 or better.</p>')+
+  '<button class="go" id="r">Try again</button>';
+ document.getElementById('r').onclick=begin;
+}
+if(Q.length)start();else app.textContent='Questions are not loaded.';
+document.addEventListener('contextmenu',function(e){e.preventDefault()});
+})();
+</script>
+</body></html>

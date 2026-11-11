@@ -1,5 +1,6 @@
 /* GE3791 site settings. EACH NEW COHORT: edit only this file (see README.md). */
 window.SITE = {
+  siteUrl: "https://karthi21c.github.io/GE3791-HVE/",
   cohort: "2026–27",
   examDate: "2026-11-18",          // yyyy-mm-dd
   examLabel: "18 November 2026",
