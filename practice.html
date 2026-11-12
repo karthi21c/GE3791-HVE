@@ -15,57 +15,140 @@ main{max-width:640px;margin:0 auto;padding:16px}a{color:var(--acc)}h1{font-size:
 .fb{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
 table{width:100%;border-collapse:collapse;font-size:15px}td,th{border:1px solid var(--line);padding:6px 8px;text-align:left}
 @media print{body{display:none}}
-.kbanner{display:block;background:#fff;border-bottom:3px solid #1f3864;margin:0 0 8px}.kbanner.nobanner img{display:none}.kbanner.nobanner:before{content:"Krishnasamy College of Engineering & Technology, Cuddalore";display:block;padding:14px 16px;text-align:center;font:700 clamp(16px,3.2vw,26px)/1.3 Georgia,serif;color:#1f3864}.kbanner.nobanner:after{content:"Affiliated to Anna University \00b7 Accredited by NAAC \00b7 Approved by AICTE";display:block;padding:0 16px 12px;text-align:center;font:13px system-ui,sans-serif;color:#8a1c1c}.kbanner img{display:block;width:100%;max-width:1045px;height:auto;margin:0 auto}</style></head><body><a class="kbanner" href="index.html"><img src="kcet-banner.jpg" width="1045" height="205" onerror="this.onerror=null;this.parentNode.className+=' nobanner'" alt="Krishnasamy College of Engineering and Technology, Cuddalore. Affiliated to Anna University, accredited by NAAC, approved by AICTE."></a><main>
+.kbanner{display:block;background:#fff;border-bottom:3px solid #1f3864;margin:0 0 8px}.kbanner.nobanner img{display:none}.kbanner.nobanner:before{content:"Krishnasamy College of Engineering & Technology, Cuddalore";display:block;padding:14px 16px;text-align:center;font:700 clamp(16px,3.2vw,26px)/1.3 Georgia,serif;color:#1f3864}.kbanner.nobanner:after{content:"Affiliated to Anna University \00b7 Accredited by NAAC \00b7 Approved by AICTE";display:block;padding:0 16px 12px;text-align:center;font:13px system-ui,sans-serif;color:#8a1c1c}.kbanner img{display:block;width:100%;max-width:1045px;height:auto;margin:0 auto}
+.modes{display:grid;gap:10px;margin:10px 0}.mode{display:block;width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.mode b{display:block;color:var(--navy)}.mode small{color:var(--mut);font-size:14px}.mode[disabled]{opacity:.55;cursor:not-allowed}.mode:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 10px}.stat{flex:1 1 90px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;text-align:center}.stat b{display:block;font-size:22px;color:var(--navy)}.stat span{font-size:13px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.chip{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--mut)}.chip.on{border-color:var(--acc);color:var(--navy);background:var(--bg);font-weight:600}
+.ubar{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:14px}.ubar span{flex:0 0 118px}.ubar .bar{flex:1;margin:0}.ubar em{flex:0 0 40px;text-align:right;font-style:normal;color:var(--mut)}.ubar.weak i{background:var(--bad)}
+.timer{float:right;font-weight:700;color:var(--navy)}.timer.low{color:var(--bad)}
+.opt.sel{border-color:var(--acc);background:var(--bg)}.row{display:flex;gap:10px;flex-wrap:wrap}.go.alt{background:var(--card);color:var(--acc);border:1.5px solid var(--acc)}
+.lb td:first-child{width:44px}.lb tr.me td{font-weight:700;background:var(--bg)}input.nick{font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);width:100%;max-width:260px;-webkit-user-select:text;user-select:text}
+#app h2{font-size:20px}#lbbox .card{margin:14px 0 0;padding:12px 14px}#lbbox h2{margin:0 0 4px;font-size:18px}.newb{background:var(--okbg);border:1px solid var(--ok);border-radius:10px;padding:8px 12px;margin:10px 0}details.rv{border-top:1px solid var(--line);padding:8px 0}details.rv summary{cursor:pointer}
+</style></head><body><a class="kbanner" href="index.html"><img src="kcet-banner.jpg" width="1045" height="205" onerror="this.onerror=null;this.parentNode.className+=' nobanner'" alt="Krishnasamy College of Engineering and Technology, Cuddalore. Affiliated to Anna University, accredited by NAAC, approved by AICTE."></a><main>
 <p class="sub"><a href="index.html">← Course home</a> · <a href="revision.html">Exam revision</a></p>
 <h1>GE3791 Practice Quiz</h1>
-<p class="sub">25 questions, 5 from each unit. You see the answer straight after each question.</p>
+<p class="sub">Practise, take a timed mock, or work on your weakest unit. Your progress stays on this phone.</p>
 <div id="app" class="card" aria-live="polite"></div>
 </main>
-<script src="site-config.js?v=20261111b"></script>
-<script src="track.js?v=20261111b"></script>
-<script src="practice-data.js?v=20261111b"></script>
+<script src="site-config.js?v=20261112a"></script>
+<script src="track.js?v=20261112a"></script>
+<script src="practice-data.js?v=20261112a"></script>
 <script>
 (function(){
-var Q=window.PRACTICE||[],app=document.getElementById('app'),names=['','Unit I Democratic Values','Unit II Secular Values','Unit III Scientific Values','Unit IV Social Ethics','Unit V Scientific Ethics'];
-var items,i,score,per,answered,wrong=[];
+if(!window.hveTrack)window.hveTrack=function(){};
+var SITE=window.SITE||{},A=SITE.analytics||{},app=document.getElementById('app');
+var names=['','Unit I Democratic Values','Unit II Secular Values','Unit III Scientific Values','Unit IV Social Ethics','Unit V Scientific Ethics'];
+var short=['','Unit I','Unit II','Unit III','Unit IV','Unit V'];
+var BADGES=[['first','First step','Finish your first attempt'],['um1','Unit I master','80% or better in Unit I'],['um2','Unit II master','80% or better in Unit II'],['um3','Unit III master','80% or better in Unit III'],['um4','Unit IV master','80% or better in Unit IV'],['um5','Unit V master','80% or better in Unit V'],['all60','All-round','60% or better in every unit in one attempt'],['comeback','Comeback','Beat your previous score by 10 points or more'],['ready','Night-before ready','70% or better in Exam mode'],['s3','3-day streak','Practise on 3 days in a row'],['s7','7-day streak','Practise on 7 days in a row']];
+var Q=[],items,i,mode,ans,endAt,timerId,wrong,rightIds,G;
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
-function best(set){try{if(set!=null)localStorage.setItem('hve_best',String(set));return localStorage.getItem('hve_best')}catch(e){return null}}
-function start(){
- var b=best();
- app.innerHTML='<h2 style="margin-top:0">Ready?</h2><p>Answer each question, read the explanation, then tap Next. Units that need more revision are shown at the end.</p>'+(b?'<p class="sub">Your best score on this device: '+esc(b)+' / '+Q.length+'</p>':'')+'<button class="go" id="s">Start the quiz</button>';
- document.getElementById('s').onclick=begin;
-}
-function begin(){
- items=Q.map(function(x,n){var idx=shuffle([0,1,2,3]);return{n:n+1,u:x.u,q:x.q,e:x.e,o:idx.map(function(k){return x.o[k]}),a:idx.indexOf(x.a)}});
- i=0;score=0;wrong=[];per={1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]};show();
-}
-function show(){
- var x=items[i];answered=false;
- var h='<p class="sub">Question '+(i+1)+' of '+items.length+' · '+esc(names[x.u])+'</p><div class="bar"><i style="width:'+(i/items.length*100)+'%"></i></div><p style="font-weight:600">'+esc(x.q)+'</p>';
- x.o.forEach(function(t,k){h+='<button class="opt" data-k="'+k+'">'+esc(t)+'</button>'});
- h+='<div id="fb"></div>';app.innerHTML=h;
- [].forEach.call(app.querySelectorAll('.opt'),function(b){b.onclick=function(){pick(+b.dataset.k)}});
-}
-function pick(k){
- if(answered)return;answered=true;var x=items[i],ok=k===x.a;per[x.u][1]++;if(!ok)wrong.push(x.n);if(ok){score++;per[x.u][0]++}
+function pad(n){return n<10?'0'+n:''+n}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+/* ---------- progress kept on this phone ---------- */
+function load(){var g=null;try{g=JSON.parse(localStorage.getItem('hve_g')||'null')}catch(e){}
+ g=g||{};g.streak=g.streak||0;g.last=g.last||'';g.n=g.n||0;g.prev=(g.prev==null?null:g.prev);g.best=g.best||0;g.badges=g.badges||{};g.h=g.h||{};
+ for(var u=1;u<=5;u++)g.h[u]=g.h[u]||[0,0];g.seen=g.seen||[];g.lb=g.lb||{on:false,nick:''};
+ if(!g.n){try{var ob=localStorage.getItem('hve_best');if(ob)g.best=Math.round(Number(ob)/25*100)}catch(e){}}
+ return g}
+function save(){try{localStorage.setItem('hve_g',JSON.stringify(G))}catch(e){}}
+/* ---------- question bank ---------- */
+function build(){var base=(window.PRACTICE||[]).map(function(q,n){q.id=q.id||n+1;return q});Q=base.concat(window.PRACTICE_ADD||[])}
+function loadBatches(done){var list=(SITE.practiceBatches||[]).slice();(function next(){var f=list.shift();if(!f)return done();var s=document.createElement('script');s.src=f+'?v=20261112b';s.onload=s.onerror=next;document.head.appendChild(s)})()}
+function seen(q){return G.seen.indexOf(q.id)>=0?1:0}
+function pickUnit(u,k){var pool=shuffle(Q.filter(function(q){return q.u===u}));pool.sort(function(a,b){return seen(a)-seen(b)});return pool.slice(0,k)}
+function weakestUnit(){var cand=[],u,t;for(u=1;u<=5;u++){t=G.h[u][1];cand.push({u:u,v:t>=3?G.h[u][0]/t:-1+t/10,r:Math.random()})}  /* little data comes first */
+ cand.sort(function(a,b){return a.v-b.v||a.r-b.r});return cand[0].u}
+function make(m){var out=[],u;
+ if(m==='p'){for(u=1;u<=5;u++)out=out.concat(pickUnit(u,5))}
+ else if(m==='x'){for(u=1;u<=5;u++)out=out.concat(pickUnit(u,4))}
+ else{u=weakestUnit();out=pickUnit(u,10)}
+ return out.map(function(x){var idx=shuffle([0,1,2,3]);return{id:x.id,u:x.u,q:x.q,e:x.e,o:idx.map(function(k){return x.o[k]}),a:idx.indexOf(x.a)}})}
+/* ---------- start screen ---------- */
+function start(){clearInterval(timerId);
+ var h='<h2 style="margin-top:0">My progress</h2><div class="stats"><div class="stat"><b>'+G.streak+'</b><span>day streak</span></div><div class="stat"><b>'+G.n+'</b><span>attempts</span></div><div class="stat"><b>'+(G.n?G.best+'%':'-')+'</b><span>best score</span></div></div>';
+ var ub='';for(var u=1;u<=5;u++){var t=G.h[u][1],pc=t?Math.round(G.h[u][0]/t*100):0,weak=t>=3&&pc<60;ub+='<div class="ubar'+(weak?' weak':'')+'"><span>'+short[u]+'</span><div class="bar"><i style="width:'+pc+'%"></i></div><em>'+(t?pc+'%':'-')+'</em></div>'}
+ h+=ub+'<div class="chips">'+BADGES.map(function(b){return '<span class="chip'+(G.badges[b[0]]?' on':'')+'" title="'+esc(b[2])+'">'+(G.badges[b[0]]?'★ ':'')+esc(b[1])+'</span>'}).join('')+'</div>';
+ h+='<h2>Choose a mode</h2><div class="modes">'+
+  '<button class="mode" data-m="p"><b>Practice</b><small>25 questions, 5 from each unit, with the answer after each question</small></button>'+
+  '<button class="mode" data-m="x"><b>Exam mode</b><small>20 questions in 20 minutes. Answers and explanations come at the end</small></button>'+
+  '<button class="mode" data-m="w"'+(G.n?'':' disabled')+'><b>Weak-unit set</b><small>'+(G.n?'10 questions from your weakest unit: '+esc(names[weakestUnit()]):'Finish one attempt first, then this targets your weakest unit')+'</small></button></div>';
+ h+='<div id="lbbox"></div>';
+ app.innerHTML=h;[].forEach.call(app.querySelectorAll('.mode'),function(b){b.onclick=function(){begin(b.dataset.m)}});board()}
+/* ---------- weekly board (optional) ---------- */
+function devId(){try{return localStorage.getItem('hve_id')||''}catch(e){return ''}}
+function board(){var box=document.getElementById('lbbox');if(!box||!A.endpoint)return;
+ var h='<h2>Weekly board (optional)</h2>';
+ if(window.hveTrackIsOff&&window.hveTrackIsOff()){box.innerHTML='<div class="card">'+h+'<p class="sub">Counting is switched off on this device, so the board is not available. Use the link at the bottom of the home page to start counting.</p></div>';return}
+ if(!G.lb.on){box.innerHTML='<div class="card">'+h+'<p class="sub">Points reward practising regularly and beating your own best score, not only high scores. Only a nickname is shown. No real names. You can leave at any time.</p><p><input class="nick" id="nk" maxlength="14" placeholder="Choose a nickname" aria-label="Nickname, 3 to 14 letters or numbers"></p><p class="sub" id="nkm">3 to 14 letters, numbers, spaces, _ or -</p><button class="go" id="join">Join the board</button></div>';
+  document.getElementById('join').onclick=function(){var v=document.getElementById('nk').value.replace(/\s+/g,' ').trim();
+   if(!/^[A-Za-z0-9 _-]{3,14}$/.test(v)){document.getElementById('nkm').textContent='Please use 3 to 14 letters, numbers, spaces, _ or - only.';return}
+   hveTrack('nick',v);G.lb={on:true,nick:v};save();board()};return}
+ box.innerHTML='<div class="card">'+h+'<p class="sub">Loading the board…</p></div>';
+ fetch(A.endpoint+'?op=lb&id='+encodeURIComponent(devId())).then(function(r){return r.json()}).then(function(j){
+  if(!j||!j.ok)throw 0;var rows='';j.top.forEach(function(x){var me=j.me&&x.n===j.me.n&&x.p===j.me.p&&x.r===j.me.r;rows+='<tr'+(me?' class="me"':'')+'><td>'+x.r+'</td><td>'+esc(x.n)+'</td><td>'+x.p+'</td></tr>'});
+  var wk=new Date(j.week+'T00:00:00');var lab=wk.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+  box.innerHTML='<div class="card">'+h+'<p class="sub">Week starting Monday '+esc(lab)+' · '+j.total+' on the board</p>'+(rows?'<table class="lb"><tr><th>#</th><th>Nickname</th><th>Points</th></tr>'+rows+'</table>':'<p>No points yet this week. Finish an attempt to start.</p>')+
+   '<p>'+(j.me?'You are <b>#'+j.me.r+'</b> as '+esc(j.me.n)+' with <b>'+j.me.p+'</b> points.':'You joined as <b>'+esc(G.lb.nick)+'</b>. Points start with your next attempt.')+'</p>'+
+   '<p class="sub">10 points for each day you practise, 5 for each attempt (up to 3 a day), 10 for a new personal best. The board resets every Monday.</p><button class="go alt" id="leave">Leave the board</button></div>';
+  document.getElementById('leave').onclick=function(){hveTrack('nick','-');G.lb={on:false,nick:''};save();board()};
+ }).catch(function(){box.innerHTML='<div class="card">'+h+'<p class="sub">The board could not be loaded now. Try again later.</p></div>'})}
+/* ---------- running a set ---------- */
+function begin(m){mode=m;items=make(m);if(!items.length){app.textContent='No questions available.';return}
+ i=0;ans=[];wrong=[];rightIds=[];
+ if(m==='x'){endAt=Date.now()+20*60*1000;clearInterval(timerId);timerId=setInterval(tick,1000)}
+ show()}
+function tick(){var el=document.getElementById('tm');var left=Math.max(0,Math.round((endAt-Date.now())/1000));
+ if(el){el.textContent=pad(Math.floor(left/60))+':'+pad(left%60);el.className='timer'+(left<=120?' low':'')}
+ if(left<=0){clearInterval(timerId);finish(true)}}
+function show(){var x=items[i];var h='<p class="sub">'+(mode==='x'?'<span class="timer" id="tm" aria-live="off"></span>':'')+'Question '+(i+1)+' of '+items.length+' · '+esc(names[x.u])+'</p><div class="bar"><i style="width:'+(i/items.length*100)+'%"></i></div><p style="font-weight:600">'+esc(x.q)+'</p>';
+ x.o.forEach(function(t,k){h+='<button class="opt'+(mode==='x'&&ans[i]===k?' sel':'')+'" data-k="'+k+'">'+esc(t)+'</button>'});
+ h+='<div id="fb"></div>';
+ if(mode==='x'){h+='<div class="row"><button class="go alt" id="pv"'+(i?'':' disabled')+'>Previous</button><button class="go" id="nx">'+(i===items.length-1?'Finish':'Next')+'</button></div>'}
+ app.innerHTML=h;if(mode==='x')tick();
+ [].forEach.call(app.querySelectorAll('.opt'),function(b){b.onclick=function(){choose(+b.dataset.k)}});
+ if(mode==='x'){document.getElementById('pv').onclick=function(){if(i>0){i--;show()}};document.getElementById('nx').onclick=function(){if(i<items.length-1){i++;show()}else{var un=items.length-ans.filter(function(v){return v!=null}).length;if(!un||confirm(un+' question(s) are unanswered. Finish the exam?')){clearInterval(timerId);finish(false)}}}}}
+function choose(k){var x=items[i];
+ if(mode==='x'){ans[i]=k;[].forEach.call(app.querySelectorAll('.opt'),function(b,j){b.classList.toggle('sel',j===k)});return}
+ if(ans[i]!=null)return;ans[i]=k;var ok=k===x.a;
  [].forEach.call(app.querySelectorAll('.opt'),function(b,j){b.disabled=true;if(j===x.a)b.classList.add('ok');else if(j===k)b.classList.add('bad')});
  var last=i===items.length-1;
  document.getElementById('fb').innerHTML='<div class="fb"><b>'+(ok?'Correct.':'Not quite.')+'</b> '+esc(x.e)+'</div><button class="go" id="n">'+(last?'See my result':'Next')+'</button>';
- var n=document.getElementById('n');n.focus();n.onclick=function(){i++;if(i<items.length)show();else done()};
-}
-function done(){
- hveTrack('quiz',score+'|'+[1,2,3,4,5].map(function(u){return per[u][0]}).join(','));if(wrong.length)hveTrack('qwrong',wrong.join(','));
- var prev=best();if(prev==null||score>Number(prev))best(score);
+ var n=document.getElementById('n');n.focus();n.onclick=function(){if(i<items.length-1){i++;show()}else finish(false)}}
+/* ---------- result, progress, badges ---------- */
+function finish(timeUp){clearInterval(timerId);
+ var per={1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0]},score=0;wrong=[];rightIds=[];
+ items.forEach(function(x,k){per[x.u][1]++;if(ans[k]===x.a){score++;per[x.u][0]++;rightIds.push(x.id)}else wrong.push(x.id)});
+ var total=items.length,pct=Math.round(score/total*100),today=ymd(new Date()),yest=ymd(new Date(Date.now()-864e5)),prev=G.prev,newB=[];
+ if(G.last!==today){G.streak=(G.last===yest)?G.streak+1:1;G.last=today}
+ for(var u=1;u<=5;u++){G.h[u][0]+=per[u][0];G.h[u][1]+=per[u][1]}
+ items.forEach(function(x){if(G.seen.indexOf(x.id)<0)G.seen.push(x.id)});if(G.seen.length>=Q.length-5)G.seen=[];if(G.seen.length>400)G.seen=G.seen.slice(-400);
+ G.n++;G.prev=pct;if(pct>G.best)G.best=pct;
+ function give(id){if(!G.badges[id]){G.badges[id]=today;for(var b=0;b<BADGES.length;b++)if(BADGES[b][0]===id)newB.push(BADGES[b][1])}}
+ give('first');
+ for(u=1;u<=5;u++){if(per[u][1]>=4&&per[u][0]/per[u][1]>=0.8)give('um'+u)}
+ var all=true;for(u=1;u<=5;u++){if(per[u][1]<3||per[u][0]/per[u][1]<0.6)all=false}if(all)give('all60');
+ if(prev!=null&&pct>=prev+10)give('comeback');if(mode==='x'&&pct>=70)give('ready');
+ if(G.streak>=3)give('s3');if(G.streak>=7)give('s7');
+ save();
+ hveTrack('q2',mode+'|'+score+'/'+total+'|'+[1,2,3,4,5].map(function(u){return per[u][0]+'/'+per[u][1]}).join(','));
+ if(wrong.length)hveTrack('qwrong',wrong.join(','));if(rightIds.length)hveTrack('qright',rightIds.join(','));
  var rows='',weak=[];
- for(var u=1;u<=5;u++){var p=per[u],pc=Math.round(p[0]/p[1]*100);rows+='<tr><td>'+esc(names[u])+'</td><td>'+p[0]+' / '+p[1]+'</td></tr>';if(pc<80)weak.push(u)}
- var msg=score>=Q.length*0.8?'Strong. Keep your revision light and rest well.':score>=Q.length*0.6?'Good base. Revise the units marked below.':'Do not worry. Use the revision page unit by unit, then try again.';
- app.innerHTML='<h2 style="margin-top:0">Your score: '+score+' / '+items.length+'</h2><p>'+msg+'</p><table><tr><th>Unit</th><th>Correct</th></tr>'+rows+'</table>'+
-  (weak.length?'<p>Revise next: '+weak.map(function(u){return '<a href="revision.html#u'+u+'">'+esc(names[u])+'</a>'}).join(' · ')+'</p>':'<p>All units are at 4 out of 5 or better.</p>')+
-  '<button class="go" id="r">Try again</button>';
- document.getElementById('r').onclick=begin;
-}
-if(Q.length)start();else app.textContent='Questions are not loaded.';
+ for(u=1;u<=5;u++){var p=per[u];if(!p[1])continue;var pc=Math.round(p[0]/p[1]*100);rows+='<tr><td>'+esc(names[u])+'</td><td>'+p[0]+' / '+p[1]+'</td><td>'+pc+'%</td></tr>';if(pc<70)weak.push(u)}
+ var title=(mode==='x'?'Exam mode':mode==='w'?'Weak-unit set':'Practice');
+ var msg=pct>=80?'Strong. Keep your revision light and rest well.':pct>=60?'Good base. Revise the units marked below.':'Do not worry. Use the revision page unit by unit, then try again.';
+ var h='<h2 style="margin-top:0">'+esc(title)+': '+score+' / '+total+' ('+pct+'%)</h2>'+(timeUp?'<p class="sub">Time is up. Unanswered questions count as not correct.</p>':'')+'<p>'+msg+'</p>'+
+  (newB.length?'<div class="newb"><b>New badge'+(newB.length>1?'s':'')+':</b> '+newB.map(esc).join(', ')+'</div>':'')+
+  '<table><tr><th>Unit</th><th>Correct</th><th>%</th></tr>'+rows+'</table>'+
+  (weak.length?'<p>Revise next: '+weak.map(function(u){return '<a href="revision.html#u'+u+'">'+esc(names[u])+'</a>'}).join(' · ')+'</p>':'<p>Every unit is at 70% or better.</p>')+
+  '<p class="sub">Day streak: '+G.streak+' · Best score: '+G.best+'%</p>';
+ if(mode==='x'){var rv='';items.forEach(function(x,k){if(ans[k]===x.a)return;rv+='<details class="rv"><summary>Q'+(k+1)+' · '+esc(names[x.u])+' · '+(ans[k]==null?'not answered':'your answer was not correct')+'</summary><p>'+esc(x.q)+'</p><p><b>Correct answer:</b> '+esc(x.o[x.a])+'</p><p>'+esc(x.e)+'</p></details>'});
+  h+=(rv?'<h3>Review your misses</h3>'+rv:'<p><b>No misses. Excellent.</b></p>')}
+ h+='<div class="row" style="margin-top:12px"><button class="go" id="again">Back to start</button>'+(weak.length&&mode!=='w'?'<button class="go alt" id="wk">Practise my weakest unit</button>':'')+'</div>';
+ app.innerHTML=h;document.getElementById('again').onclick=start;var wb=document.getElementById('wk');if(wb)wb.onclick=function(){begin('w')};window.scrollTo(0,0)}
+G=load();build();
+loadBatches(function(){build();if(Q.length)start();else app.textContent='Questions are not loaded.'});
 document.addEventListener('contextmenu',function(e){e.preventDefault()});
 })();
 </script>

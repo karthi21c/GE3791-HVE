@@ -50,3 +50,11 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - Every class activity and assignment is tagged to the outcome it builds, at or below that outcome's level.
 - Only exception: the Unit 5 mini-project, pitched at K5 and shown as a stretch task under CO4.
 - Each year, when you add or change an activity, check its tag against this rule before publishing.
+
+## Practice quiz: modes, badges, weekly board, question batches
+- Modes: Practice (25 questions), Exam mode (20 questions in 20 minutes, answers at the end), Weak-unit set (10 questions from the weakest unit).
+- Progress, streak and badges are kept on the learner's phone. The quiz favours questions the learner has not yet seen.
+- Weekly board (optional, anonymous): the learner joins with a nickname. Points: 10 for each active day, 5 per attempt (3 a day at most), 10 once a day for a new personal best. It resets every Monday (IST). Needs the web app URL in site-config.js.
+- Hide a nickname: Usage analytics > Hide a nickname from the weekly board (adds it to the sheet LB_Hidden; delete the row to show it again).
+- Question bank: practice-data.js holds ids 1 to 25. New batches are separate files (practice-data-b1.js has ids 26 to 50). A batch goes live only when its file name is listed in practiceBatches in site-config.js. Never reuse or renumber an id: the "most missed questions" report relies on it.
+- Adding a batch next year: copy practice-data-b1.js, give new ids, add the file name to practiceBatches.

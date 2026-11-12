@@ -6,6 +6,7 @@ window.SITE = {
   examLabel: "18 November 2026",
   examSession: "FN",
   updated: "10 Nov 2026",
+  practiceBatches: ["practice-data-b1.js"],            // add "practice-data-b1.js" etc. to switch on each reviewed question batch
   analytics: {                     // anonymous usage counting; leave blank to switch off
     endpoint: "https://script.google.com/macros/s/AKfycbx_z1HNnk7TNlydstY3ZV54H9-Et5BqhD4vHFDTIJULgHJoA9qQdqnFmaUv-VDqZLOvdw/exec",                  // the same web app URL used in agent.html
     goatcounter: "karthi21c",               // optional: your GoatCounter code, e.g. "ge3791-kcet"
