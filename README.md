@@ -58,3 +58,6 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - Hide a nickname: Usage analytics > Hide a nickname from the weekly board (adds it to the sheet LB_Hidden; delete the row to show it again).
 - Question bank: practice-data.js holds ids 1 to 25. New batches are separate files (practice-data-b1.js has ids 26 to 50). A batch goes live only when its file name is listed in practiceBatches in site-config.js. Never reuse or renumber an id: the "most missed questions" report relies on it.
 - Adding a batch next year: copy practice-data-b1.js, give new ids, add the file name to practiceBatches.
+
+- Batch 2 (practice-data-b2.js, ids 51 to 75) is ready. To switch both batches on: practiceBatches: ["practice-data-b1.js", "practice-data-b2.js"]. Keep the review workbook for each batch with the course records.
+- For each new cohort, a lighter routine works well: read "Most missed practice questions" in Usage_Summary, then replace or reword the five weakest or unclear questions in their batch file and keep every id the same. Add new questions as a new batch with fresh ids.
