@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GE3791 Concept Maps</title>
+<style>
+:root{--bg:#f6f8fc;--card:#fff;--ink:#1b2437;--mut:#5b667d;--acc:#2e5496;--navy:#1f3864;--line:#d5dcea;--ok:#1b7f3b;--okbg:#e4f5e9;--bad:#b3261e;--badbg:#fdeceb;
+--v:#2e5496;--l:#9a5b00;--p:#6a3d9a;--e:#1b7f3b;--c:#506078}
+@media(prefers-color-scheme:dark){:root{--bg:#10151f;--card:#1a2130;--ink:#e8edf7;--mut:#9aa6bd;--acc:#7da4ec;--navy:#9db8ee;--line:#2d374c;--ok:#74d08f;--okbg:#173524;--bad:#ff8b84;--badbg:#3a1f1d;--v:#7da4ec;--l:#e0a84a;--p:#c4a0ea;--e:#74d08f;--c:#9db0cc}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,"Noto Sans Tamil",sans-serif;-webkit-user-select:none;user-select:none}
+main{max-width:720px;margin:0 auto;padding:16px}a{color:var(--acc)}h1{font-size:22px;margin:4px 0;color:var(--navy)}.sub{color:var(--mut);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+button{font:inherit;color:inherit}button:focus-visible,a:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.kbanner{display:block;background:#fff;border-bottom:3px solid #1f3864;margin:0 0 8px}.kbanner img{display:block;width:100%;max-width:1045px;height:auto;margin:0 auto}
+.kbanner.nobanner img{display:none}.kbanner.nobanner:before{content:"Krishnasamy College of Engineering & Technology, Cuddalore";display:block;padding:14px 16px;text-align:center;font:700 clamp(16px,3.2vw,26px)/1.3 Georgia,serif;color:#1f3864}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tab{padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;font-weight:600}
+.tab[aria-pressed=true]{border-color:var(--acc);background:var(--acc);color:#fff}
+.seg{display:flex;gap:8px;margin:8px 0}.seg .tab{flex:1;text-align:center}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}.mini{padding:7px 12px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);font-size:14px;cursor:pointer}
+.mini[aria-pressed=true]{border-color:var(--acc);color:var(--navy);font-weight:700}
+.centre{border-radius:14px;padding:14px;text-align:center;background:var(--navy);color:#fff}.centre b{font-size:20px;display:block}.centre span{font-size:16px;opacity:.95}
+@media(prefers-color-scheme:dark){.centre{background:#2a3a5c;color:#fff}}
+.branch{border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:10px;margin:10px 0;background:var(--card)}
+.bhead{width:100%;text-align:left;background:none;border:0;padding:12px 14px;cursor:pointer;display:block}
+.bhead b{font-size:17px;color:var(--navy)}.bhead small{display:block;color:var(--mut);font-size:14px}
+.rel{display:table;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:1px 9px;margin-bottom:4px;color:var(--mut)}
+.leaves{padding:0 12px 12px}
+.leaf{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);cursor:pointer}
+.leaf .ty{font-size:12px;font-weight:700;margin-right:6px}.t-v .ty{color:var(--v)}.t-l .ty{color:var(--l)}.t-p .ty{color:var(--p)}.t-e .ty{color:var(--e)}.t-c .ty{color:var(--c)}
+.leaf.t-v{border-left:5px solid var(--v)}.leaf.t-l{border-left:5px solid var(--l)}.leaf.t-p{border-left:5px solid var(--p)}.leaf.t-e{border-left:5px solid var(--e)}.leaf.t-c{border-left:5px solid var(--c)}
+.leaf .ta{display:block;color:var(--mut);font-size:15px}
+.leaf.seen:after{content:" ✓";color:var(--ok);font-weight:700}
+.detail{margin:4px 0 8px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px dashed var(--acc)}
+.say{padding:7px 12px;border:1.5px solid var(--acc);border-radius:999px;background:var(--card);color:var(--acc);font-size:14px;margin:6px 6px 0 0;cursor:pointer}
+.say[aria-pressed=true]{background:var(--acc);color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--mut);margin:6px 0}
+.blank{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:2px dashed var(--acc);border-radius:10px;background:var(--bg);cursor:pointer}
+.blank .clue{display:block;font-size:15px}.blank .q{font-weight:700;color:var(--acc)}
+.blank.on{background:var(--card);box-shadow:0 0 0 3px var(--acc)}.blank.done{border:2px solid var(--ok);background:var(--okbg);cursor:default}
+.blank.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media(prefers-reduced-motion:reduce){.blank.shake{animation:none;border-color:var(--bad)}}
+.bank{max-height:30vh;overflow-y:auto;display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;position:sticky;bottom:0;background:var(--bg);padding:8px 0;border-top:1px solid var(--line)}
+.chip{padding:6px 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;font-size:15px}
+.chip.on{border-color:var(--acc);background:var(--acc);color:#fff}.chip[disabled]{opacity:.35;cursor:default}
+.go{padding:11px 18px;border-radius:10px;border:0;background:var(--acc);color:#fff;font-weight:700;cursor:pointer;margin:6px 8px 0 0}.go.alt{background:var(--card);color:var(--acc);border:1.5px solid var(--acc)}
+.fb{margin:8px 0;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--acc)}
+@media print{body{display:none}}
+</style></head><body><a class="kbanner" href="index.html"><img src="kcet-banner.jpg" width="1045" height="205" onerror="this.onerror=null;this.parentNode.className+=' nobanner'" alt="Krishnasamy College of Engineering and Technology"></a>
+<main>
+<p class="sub"><a href="index.html">← Course home</a> · <a href="revision.html">Exam revision</a> · <a href="practice.html">Practice quiz</a></p>
+<h1>Concept Maps</h1>
+<p class="sub">See how the ideas connect, then test yourself by filling the missing words. Tap a word to hear it and see its Tamil. Your progress stays on this phone.</p>
+<div id="app" aria-live="polite"></div>
+</main>
+<script src="site-config.js?v=20261114a"></script>
+<script src="track.js?v=20261114a"></script>
+<script src="mindmap-data.js?v=20261114a"></script>
+<script>
+(function(){
+if(!window.hveTrack)window.hveTrack=function(){};
+var SITE=window.SITE||{},app=document.getElementById('app'),MAPS=window.MAPS||{},REL=window.MAPREL||{};
+var TYPES={v:['★','Value'],l:['§','Law or Article'],p:['☺','Person or reading'],e:['●','Example'],c:['◆','Concept']};
+var unit=1,mode='see',ta=true,P=load(),open={},sel=null,fill=null;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
+function load(){var p=null;try{p=JSON.parse(localStorage.getItem('hve_mm')||'null')}catch(e){}p=p||{};p.seen=p.seen||{};p.miss=p.miss||{};p.best=p.best||{};return p}
+function save(){try{localStorage.setItem('hve_mm',JSON.stringify(P))}catch(e){}}
+function leaves(u){var a=[];MAPS[u].branches.forEach(function(b){b.leaves.forEach(function(l){a.push({b:b,l:l})})});return a}
+if(SITE.maps!==true||!window.MAPS){app.innerHTML='<div class="card"><b>Concept maps open soon.</b><p class="sub">Your teacher will tell the class when they are ready.</p></div>';return}
+/* ---------- header controls ---------- */
+function head(){
+ var h='<div class="tabs" role="group" aria-label="Choose unit">';
+ [1,2,3,4,5].forEach(function(u){h+='<button class="tab" data-u="'+u+'" aria-pressed="'+(u===unit)+'">Unit '+['I','II','III','IV','V'][u-1]+'</button>'});
+ h+='</div><div class="seg" role="group" aria-label="Choose mode"><button class="tab" data-m="see" aria-pressed="'+(mode==='see')+'">See it</button><button class="tab" data-m="fill" aria-pressed="'+(mode==='fill')+'">Fill the word</button></div>';
+ var seen=leaves(unit).filter(function(x){return P.seen[x.l.id]}).length,tot=leaves(unit).length;
+ h+='<div class="tools"><button class="mini" id="tta" aria-pressed="'+ta+'">தமிழ் '+(ta?'on':'off')+'</button>';
+ h+='<span class="sub">Opened '+seen+' of '+tot+' words'+(P.best[unit]!=null?' · best fill score '+P.best[unit]+'%':'')+'</span></div>';
+ h+='<div class="bar" aria-hidden="true"><i style="width:'+Math.round(seen/tot*100)+'%"></i></div>';
+ h+='<div class="legend" aria-label="Key">'+Object.keys(TYPES).map(function(k){return '<span class="t-'+k+'"><b style="color:var(--'+k+')">'+TYPES[k][0]+'</b> '+TYPES[k][1]+'</span>'}).join('')+'</div>';
+ h+='<p class="sub">Print: <a href="maps/GE3791_Map_U'+unit+'.pdf">map with answers (PDF)</a> · <a href="maps/GE3791_Map_U'+unit+'_blank.pdf">blank worksheet (PDF)</a></p>';
+ return h}
+function centre(){var m=MAPS[unit];return '<div class="centre"><b>Unit '+['I','II','III','IV','V'][unit-1]+': '+esc(m.title)+'</b>'+(ta?'<span>'+esc(m.ta)+'</span>':'')+'</div>'}
+function relp(b){return '<span class="rel">'+esc(b.rel)+' ▸'+(ta&&REL[b.rel]?' · '+esc(REL[b.rel]):'')+'</span>'}
+/* ---------- See it ---------- */
+function seeView(){
+ var h=centre()+'<div class="tools"><button class="mini" id="oa">Open all</button><button class="mini" id="ca">Close all</button></div>';
+ MAPS[unit].branches.forEach(function(b){
+  var on=!!open[b.id];
+  h+='<div class="branch"><button class="bhead" data-b="'+b.id+'" aria-expanded="'+on+'">'+relp(b)+'<b>'+esc(b.en)+'</b>'+(ta?'<small>'+esc(b.ta)+'</small>':'')+'</button>';
+  if(on){h+='<div class="leaves">';
+   b.leaves.forEach(function(l){
+    h+='<button class="leaf t-'+l.t+(P.seen[l.id]?' seen':'')+'" data-l="'+l.id+'" aria-expanded="'+(sel===l.id)+'"><span class="ty">'+TYPES[l.t][0]+' '+TYPES[l.t][1]+'</span><b>'+esc(l.en)+'</b>'+(ta?'<span class="ta">'+esc(l.ta)+'</span>':'')+'</button>';
+    if(sel===l.id)h+='<div class="detail"><div>'+esc(l.m)+'</div><button class="say" data-say="en" data-id="'+l.id+'" aria-pressed="false">🔊 Listen</button><button class="say" data-say="ta" data-id="'+l.id+'" aria-pressed="false">🔊 தமிழ்</button></div>'});
+   h+='</div>'}
+  h+='</div>'});
+ return h}
+/* ---------- Fill the word ---------- */
+function startFill(level){
+ var all=leaves(unit),k=level==='e'?5:level==='m'?8:Math.min(12,all.length);
+ var pool=shuffle(all);pool.sort(function(a,b){return (P.miss[b.l.id]||0)-(P.miss[a.l.id]||0)+((Math.random()-.5)*1.5)});
+ var pick=pool.slice(0,k),ids={};pick.forEach(function(x){ids[x.l.id]=1});
+ var others=shuffle(MAPS[unit].branches.length&&Object.keys(MAPS).filter(function(u){return +u!==unit}).reduce(function(a,u){return a.concat(leaves(+u))},[])).slice(0,2);
+ fill={level:level,items:pick,bank:shuffle(pick.concat(others).map(function(x){return x.l.id})),done:{},tries:{},wrong:{},misses:[],first:0,pickedChip:null,pickedBlank:null,over:false};
+ window.hveTrack('mmv','u'+unit);render()}
+function lookup(id){var r=null;leaves(+id.charAt(1)).forEach(function(x){if(x.l.id===id)r=x});return r}
+function fillView(){
+ if(!fill)return '<div class="card"><b>Choose a level</b><p class="sub">Missing words appear as dashed boxes with a clue. Tap a word below, then tap the box where it belongs.</p>'+
+  '<button class="go" data-lv="e">Easy · 5 blanks</button><button class="go" data-lv="m">Medium · 8 blanks</button><button class="go" data-lv="h">Hard · 12 blanks</button>'+
+  '<p class="sub">Easy shows the meaning and Tamil. Medium shows the meaning. Hard shows only the group and the link word.</p></div>';
+ var h=centre(),blanks={};fill.items.forEach(function(x){blanks[x.l.id]=1});
+ h+='<div class="bar" aria-hidden="true"><i style="width:'+Math.round(Object.keys(fill.done).length/fill.items.length*100)+'%"></i></div>';
+ MAPS[unit].branches.forEach(function(b){
+  h+='<div class="branch"><div class="bhead" style="cursor:default">'+relp(b)+'<b>'+esc(b.en)+'</b>'+(ta?'<small>'+esc(b.ta)+'</small>':'')+'</div><div class="leaves">';
+  b.leaves.forEach(function(l){
+   if(!blanks[l.id]){h+='<div class="leaf t-'+l.t+'" style="cursor:default"><b>'+esc(l.en)+'</b>'+(ta?'<span class="ta">'+esc(l.ta)+'</span>':'')+'</div>';return}
+   if(fill.done[l.id]){h+='<div class="blank done"><b>✓ '+esc(l.en)+'</b>'+(ta?'<span class="clue">'+esc(l.ta)+'</span>':'')+'<span class="clue">'+esc(l.m)+'</span></div>';return}
+   var clue=fill.level==='h'?'Part of: '+esc(b.en)+' ('+esc(b.rel)+')':esc(l.m)+(fill.level==='e'&&ta?'<br>'+esc(l.ta):'');
+   var hint=(fill.wrong[l.id]>=2)?'<span class="clue" style="color:var(--bad)">Hint: starts with “'+esc(l.en.charAt(0))+'”'+(ta?' · '+esc(l.ta):'')+'</span>':'';
+   h+='<button class="blank'+(fill.pickedBlank===l.id?' on':'')+'" data-bl="'+l.id+'"><span class="q">? Tap here</span><span class="clue">'+clue+'</span>'+hint+'</button>'});
+  h+='</div></div>'});
+ h+='<div class="bank" role="group" aria-label="Word bank">'+fill.bank.map(function(id){var x=lookup(id);var used=!!fill.done[id];return '<button class="chip'+(fill.pickedChip===id?' on':'')+'" data-ch="'+id+'"'+(used?' disabled':'')+'>'+esc(x.l.en)+'</button>'}).join('')+'</div>';
+ if(fill.over){var n=fill.items.length,pct=Math.round(fill.first/n*100);
+  h+='<div class="card"><b>Done: '+fill.first+' of '+n+' right the first time ('+pct+'%)</b><div class="bar"><i style="width:'+pct+'%"></i></div>'+
+   (fill.misses.length?'<p>Words to look at again:</p><ul>'+fill.misses.map(function(id){var x=lookup(id);return '<li><b>'+esc(x.l.en)+'</b>'+(ta?' · '+esc(x.l.ta):'')+'</li>'}).join('')+'</ul>':'<p>Excellent. No misses.</p>')+
+   '<button class="go" data-lv="'+fill.level+'">Try again (new blanks)</button><button class="go alt" data-act="see">Back to See it</button></div>'}
+ return h}
+function tryPlace(){
+ if(!fill||!fill.pickedChip||!fill.pickedBlank)return;
+ var c=fill.pickedChip,b=fill.pickedBlank;fill.pickedChip=null;fill.pickedBlank=null;
+ if(c===b){fill.done[b]=1;if(!fill.tries[b])fill.first++;P.seen[b]=1;if(P.miss[b])P.miss[b]=Math.max(0,P.miss[b]-1);
+  if(Object.keys(fill.done).length===fill.items.length)finishFill();render();return}
+ fill.tries[b]=1;fill.wrong[b]=(fill.wrong[b]||0)+1;if(fill.misses.indexOf(b)<0)fill.misses.push(b);P.miss[b]=(P.miss[b]||0)+1;
+ render();var el=app.querySelector('[data-bl="'+b+'"]');if(el){el.classList.add('shake');try{el.focus()}catch(e){}}}
+function finishFill(){
+ fill.over=true;var n=fill.items.length,pct=Math.round(fill.first/n*100);
+ if(P.best[unit]==null||pct>P.best[unit])P.best[unit]=pct;save();
+ window.hveTrack('mm','u'+unit+'|'+fill.level+'|'+fill.first+'/'+n);
+ if(fill.misses.length)window.hveTrack('mmx',fill.misses.slice(0,10).join(','))}
+/* ---------- listen ---------- */
+function stopSay(){try{speechSynthesis.cancel()}catch(e){}[].forEach.call(document.querySelectorAll('.say[aria-pressed=true]'),function(b){b.setAttribute('aria-pressed','false')})}
+function say(btn){
+ if(!('speechSynthesis' in window)){alert('Listening is not supported on this browser.');return}
+ var x=lookup(btn.getAttribute('data-id')),isTa=btn.getAttribute('data-say')==='ta';
+ if(btn.getAttribute('aria-pressed')==='true'){stopSay();return}stopSay();
+ var vs=speechSynthesis.getVoices();if(isTa&&vs.length&&!vs.some(function(v){return /^ta/i.test(v.lang)})){alert('No Tamil voice is installed on this phone. Install it in the phone settings under Text-to-speech, or use English.');return}
+ var u=new SpeechSynthesisUtterance(isTa?x.l.ta:x.l.en+'. '+x.l.m);u.lang=isTa?'ta-IN':'en-IN';u.rate=.9;
+ u.onend=u.onerror=function(){btn.setAttribute('aria-pressed','false')};btn.setAttribute('aria-pressed','true');
+ window.hveTrack('listen',(isTa?'ta':'en')+':map');speechSynthesis.speak(u)}
+/* ---------- render and events ---------- */
+function render(){app.innerHTML='<div class="card" style="margin-top:0">'+head()+'</div>'+(mode==='see'?seeView():fillView())}
+app.addEventListener('click',function(e){
+ var t=e.target.closest('button');if(!t)return;
+ if(t.hasAttribute('data-u')){unit=+t.getAttribute('data-u');open={};sel=null;fill=null;window.hveTrack('mmv','u'+unit);render();return}
+ if(t.hasAttribute('data-m')){mode=t.getAttribute('data-m');sel=null;fill=null;stopSay();render();return}
+ if(t.id==='tta'){ta=!ta;render();return}
+ if(t.id==='oa'){MAPS[unit].branches.forEach(function(b){open[b.id]=1});render();return}
+ if(t.id==='ca'){open={};sel=null;render();return}
+ if(t.hasAttribute('data-b')){var id=t.getAttribute('data-b');open[id]=!open[id];render();return}
+ if(t.hasAttribute('data-l')){var l=t.getAttribute('data-l');sel=(sel===l?null:l);if(sel){P.seen[l]=1;save()}stopSay();render();var d=app.querySelector('.detail');if(d&&d.scrollIntoView)d.scrollIntoView({block:'nearest'});return}
+ if(t.hasAttribute('data-say')){say(t);return}
+ if(t.hasAttribute('data-lv')){startFill(t.getAttribute('data-lv'));return}
+ if(t.getAttribute('data-act')==='see'){mode='see';fill=null;render();return}
+ if(t.hasAttribute('data-ch')){var c=t.getAttribute('data-ch');fill.pickedChip=(fill.pickedChip===c?null:c);render();tryPlace();return}
+ if(t.hasAttribute('data-bl')){var b=t.getAttribute('data-bl');fill.pickedBlank=(fill.pickedBlank===b?null:b);render();tryPlace();return}
+});
+window.hveTrack('mmv','u'+unit);render();
+})();
+</script></body></html>

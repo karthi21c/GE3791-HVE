@@ -63,3 +63,10 @@ GitHub Pages can take a few minutes, and phones keep old copies. When you change
 - For each new cohort, a lighter routine works well: read "Most missed practice questions" in Usage_Summary, then replace or reword the five weakest or unclear questions in their batch file and keep every id the same. Add new questions as a new batch with fresh ids.
 
 - Batch 3 (practice-data-b3.js, ids 76 to 100) completes the bank of 100. Full switch-on: practiceBatches: ["practice-data-b1.js", "practice-data-b2.js", "practice-data-b3.js"].
+
+## Concept maps (mindmap.html)
+- Hidden by default. In site-config.js set `maps: true` only after you have reviewed GE3791_ConceptMaps_Review.xlsx (Tamil included). The Concept maps link then appears in the home-page menu.
+- Content is in mindmap-data.js (five units, groups, words, Tamil gloss, plain meaning, link words). Edit the text there; keep the ids (u1n1, u1b1 ...) unchanged because the usage report uses them.
+- Printable PDFs are in maps/ (answer map and blank worksheet for each unit).
+- Learner progress is kept only in the browser (key hve_mm). Anonymous events: mmv, mm, mmx. After changing words, regenerate agent/MapLabels.gs so the usage summary names the hardest words.
+- Apps Script: replace Analytics.gs and add MapLabels.gs, then Refresh usage summary.
