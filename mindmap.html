@@ -81,7 +81,7 @@ function head(){
  h+='<span class="sub">Opened '+seen+' of '+tot+' words'+(P.best[unit]!=null?' · best fill score '+P.best[unit]+'%':'')+'</span></div>';
  h+='<div class="bar" aria-hidden="true"><i style="width:'+Math.round(seen/tot*100)+'%"></i></div>';
  h+='<div class="legend" aria-label="Key">'+Object.keys(TYPES).map(function(k){return '<span class="t-'+k+'"><b style="color:var(--'+k+')">'+TYPES[k][0]+'</b> '+TYPES[k][1]+'</span>'}).join('')+'</div>';
- h+='<p class="sub">Print: <a href="maps/GE3791_Map_U'+unit+'.pdf">map with answers (PDF)</a> · <a href="maps/GE3791_Map_U'+unit+'_blank.pdf">blank worksheet (PDF)</a></p>';
+ h+='<p class="sub">Print (A4): <a href="maps/GE3791_Map_U'+unit+'_blank.pdf">worksheet</a> · <a href="maps/GE3791_Map_U'+unit+'_blank_ta.pdf">worksheet with Tamil clues</a> · <a href="maps/GE3791_Map_U'+unit+'.pdf">answer map</a></p>';
  return h}
 function centre(){var m=MAPS[unit],c=(TH[unit]||[])[0];return '<div class="centre"'+(c?' style="background:'+c+'"':'')+'>'+ic('c'+unit).replace('class="ico"','class="ico"')+'<b>Unit '+['I','II','III','IV','V'][unit-1]+': '+esc(m.title)+'</b>'+(ta?'<span>'+esc(m.ta)+'</span>':'')+'</div>'}
 function relp(b){return '<span class="rel">'+esc(b.rel)+' ▸'+(ta&&REL[b.rel]?' · '+esc(REL[b.rel]):'')+'</span>'}
