@@ -43,6 +43,8 @@ button{font:inherit;color:inherit}button:focus-visible,a:focus-visible{outline:3
 .go{padding:11px 18px;border-radius:10px;border:0;background:var(--acc);color:#fff;font-weight:700;cursor:pointer;margin:6px 8px 0 0}.go.alt{background:var(--card);color:var(--acc);border:1.5px solid var(--acc)}
 .fb{margin:8px 0;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line)}
 .bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--acc)}
+.ico{font-size:22px;line-height:1;margin-right:8px;vertical-align:-2px}.leaf .ico{font-size:24px;float:left;margin:2px 10px 0 0}.leaf{overflow:hidden}.bhead .ico{font-size:28px;float:left;margin:2px 10px 0 0;background:#fff;border-radius:50%;padding:2px 4px}.centre .ico{font-size:40px;display:block;margin-bottom:2px}
+.strip{display:flex;gap:4px;flex-wrap:wrap;margin:4px 0 0;font-size:20px;clear:both}.rel{background:rgba(255,255,255,.7);color:#333}@media(prefers-color-scheme:dark){.rel{background:rgba(0,0,0,.25);color:var(--mut)}}
 @media print{body{display:none}}
 </style></head><body><a class="kbanner" href="index.html"><img src="kcet-banner.jpg" width="1045" height="205" onerror="this.onerror=null;this.parentNode.className+=' nobanner'" alt="Krishnasamy College of Engineering and Technology"></a>
 <main>
@@ -54,10 +56,13 @@ button{font:inherit;color:inherit}button:focus-visible,a:focus-visible{outline:3
 <script src="site-config.js?v=20261114a"></script>
 <script src="track.js?v=20261114a"></script>
 <script src="mindmap-data.js?v=20261114a"></script>
+<script src="mindmap-icons.js?v=20261115a"></script>
 <script>
 (function(){
 if(!window.hveTrack)window.hveTrack=function(){};
 var SITE=window.SITE||{},app=document.getElementById('app'),MAPS=window.MAPS||{},REL=window.MAPREL||{};
+var IC=window.MAPICON||{},TH=window.MAPTHEME||{},BR=window.MAPBR||[];function ic(id){return IC[id]?'<span class="ico" aria-hidden="true">'+IC[id]+'</span>':''}
+function bcol(b){var i=+b.id.charAt(3)-1;return BR[i%BR.length]||'#2e5496'}
 var TYPES={v:['★','Value'],l:['§','Law or Article'],p:['☺','Person or reading'],e:['●','Example'],c:['◆','Concept']};
 var unit=1,mode='see',ta=true,P=load(),open={},sel=null,fill=null;
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
@@ -78,17 +83,17 @@ function head(){
  h+='<div class="legend" aria-label="Key">'+Object.keys(TYPES).map(function(k){return '<span class="t-'+k+'"><b style="color:var(--'+k+')">'+TYPES[k][0]+'</b> '+TYPES[k][1]+'</span>'}).join('')+'</div>';
  h+='<p class="sub">Print: <a href="maps/GE3791_Map_U'+unit+'.pdf">map with answers (PDF)</a> · <a href="maps/GE3791_Map_U'+unit+'_blank.pdf">blank worksheet (PDF)</a></p>';
  return h}
-function centre(){var m=MAPS[unit];return '<div class="centre"><b>Unit '+['I','II','III','IV','V'][unit-1]+': '+esc(m.title)+'</b>'+(ta?'<span>'+esc(m.ta)+'</span>':'')+'</div>'}
+function centre(){var m=MAPS[unit],c=(TH[unit]||[])[0];return '<div class="centre"'+(c?' style="background:'+c+'"':'')+'>'+ic('c'+unit).replace('class="ico"','class="ico"')+'<b>Unit '+['I','II','III','IV','V'][unit-1]+': '+esc(m.title)+'</b>'+(ta?'<span>'+esc(m.ta)+'</span>':'')+'</div>'}
 function relp(b){return '<span class="rel">'+esc(b.rel)+' ▸'+(ta&&REL[b.rel]?' · '+esc(REL[b.rel]):'')+'</span>'}
 /* ---------- See it ---------- */
 function seeView(){
  var h=centre()+'<div class="tools"><button class="mini" id="oa">Open all</button><button class="mini" id="ca">Close all</button></div>';
  MAPS[unit].branches.forEach(function(b){
   var on=!!open[b.id];
-  h+='<div class="branch"><button class="bhead" data-b="'+b.id+'" aria-expanded="'+on+'">'+relp(b)+'<b>'+esc(b.en)+'</b>'+(ta?'<small>'+esc(b.ta)+'</small>':'')+'</button>';
+  var bc=bcol(b);h+='<div class="branch" style="border-left-color:'+bc+';background:linear-gradient(90deg,'+bc+'18,transparent 60%)"><button class="bhead" data-b="'+b.id+'" aria-expanded="'+on+'">'+ic(b.id)+relp(b)+'<b style="color:'+bc+'">'+esc(b.en)+'</b>'+(ta?'<small>'+esc(b.ta)+'</small>':'')+(on?'':'<span class="strip" aria-hidden="true">'+b.leaves.map(function(l){return IC[l.id]||''}).join(' ')+'</span>')+'</button>';
   if(on){h+='<div class="leaves">';
    b.leaves.forEach(function(l){
-    h+='<button class="leaf t-'+l.t+(P.seen[l.id]?' seen':'')+'" data-l="'+l.id+'" aria-expanded="'+(sel===l.id)+'"><span class="ty">'+TYPES[l.t][0]+' '+TYPES[l.t][1]+'</span><b>'+esc(l.en)+'</b>'+(ta?'<span class="ta">'+esc(l.ta)+'</span>':'')+'</button>';
+    h+='<button class="leaf t-'+l.t+(P.seen[l.id]?' seen':'')+'" data-l="'+l.id+'" aria-expanded="'+(sel===l.id)+'">'+ic(l.id)+'<span class="ty">'+TYPES[l.t][0]+' '+TYPES[l.t][1]+'</span><b>'+esc(l.en)+'</b>'+(ta?'<span class="ta">'+esc(l.ta)+'</span>':'')+'</button>';
     if(sel===l.id)h+='<div class="detail"><div>'+esc(l.m)+'</div><button class="say" data-say="en" data-id="'+l.id+'" aria-pressed="false">🔊 Listen</button><button class="say" data-say="ta" data-id="'+l.id+'" aria-pressed="false">🔊 தமிழ்</button></div>'});
    h+='</div>'}
   h+='</div>'});
@@ -109,10 +114,10 @@ function fillView(){
  var h=centre(),blanks={};fill.items.forEach(function(x){blanks[x.l.id]=1});
  h+='<div class="bar" aria-hidden="true"><i style="width:'+Math.round(Object.keys(fill.done).length/fill.items.length*100)+'%"></i></div>';
  MAPS[unit].branches.forEach(function(b){
-  h+='<div class="branch"><div class="bhead" style="cursor:default">'+relp(b)+'<b>'+esc(b.en)+'</b>'+(ta?'<small>'+esc(b.ta)+'</small>':'')+'</div><div class="leaves">';
+  var bc2=bcol(b);h+='<div class="branch" style="border-left-color:'+bc2+'"><div class="bhead" style="cursor:default">'+ic(b.id)+relp(b)+'<b style="color:'+bc2+'">'+esc(b.en)+'</b>'+(ta?'<small>'+esc(b.ta)+'</small>':'')+'</div><div class="leaves">';
   b.leaves.forEach(function(l){
-   if(!blanks[l.id]){h+='<div class="leaf t-'+l.t+'" style="cursor:default"><b>'+esc(l.en)+'</b>'+(ta?'<span class="ta">'+esc(l.ta)+'</span>':'')+'</div>';return}
-   if(fill.done[l.id]){h+='<div class="blank done"><b>✓ '+esc(l.en)+'</b>'+(ta?'<span class="clue">'+esc(l.ta)+'</span>':'')+'<span class="clue">'+esc(l.m)+'</span></div>';return}
+   if(!blanks[l.id]){h+='<div class="leaf t-'+l.t+'" style="cursor:default">'+ic(l.id)+'<b>'+esc(l.en)+'</b>'+(ta?'<span class="ta">'+esc(l.ta)+'</span>':'')+'</div>';return}
+   if(fill.done[l.id]){h+='<div class="blank done">'+ic(l.id)+'<b>✓ '+esc(l.en)+'</b>'+(ta?'<span class="clue">'+esc(l.ta)+'</span>':'')+'<span class="clue">'+esc(l.m)+'</span></div>';return}
    var clue=fill.level==='h'?'Part of: '+esc(b.en)+' ('+esc(b.rel)+')':esc(l.m)+(fill.level==='e'&&ta?'<br>'+esc(l.ta):'');
    var hint=(fill.wrong[l.id]>=2)?'<span class="clue" style="color:var(--bad)">Hint: starts with “'+esc(l.en.charAt(0))+'”'+(ta?' · '+esc(l.ta):'')+'</span>':'';
    h+='<button class="blank'+(fill.pickedBlank===l.id?' on':'')+'" data-bl="'+l.id+'"><span class="q">? Tap here</span><span class="clue">'+clue+'</span>'+hint+'</button>'});
